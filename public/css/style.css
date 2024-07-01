@@ -1,0 +1,306 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+}
+
+li{
+    list-style: none;
+}
+
+body{
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+}
+
+/* CSS to menu */
+#menu{
+   width: 100%;
+   height: auto;
+   box-shadow: 0px 0px 10px rgba(76, 76, 76, 0.745);
+}
+
+/* menu 1 */
+.menu1{
+    width: 100%;
+    height: 56px;
+    background-color: #042C78;
+}
+
+.customMenu1{
+    max-width: 1140px;
+    width: 90%;
+    height: 56px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+}
+
+.customMenu1 ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.customMenu1 ul li a{
+    width: 120px;
+    height: 56px;
+    margin: 0px 0px 0px 8px;
+}
+
+.customMenu1 .nav li a:hover{
+    background-color:#FFFFFF;
+}
+
+.customMenu1 img{
+    margin-left: 8px;
+}
+
+.customMenu1 a:hover{
+    background-color: rgb(0, 8, 254);
+}
+
+.customMenu1 li{
+    width: 120px;
+    height: 56px;
+}
+
+.customMenu1 span{
+    font-size: 16px;
+    padding: 8px;
+    color: white;
+    font-weight: 400;
+}
+
+/* menu 2 */
+
+.menu2{
+    width: 100%;
+    height: 56px;
+    background-color: white;
+    border: 1px solid rgba(48, 48, 48, 0.69);
+}
+
+.customMenu2{
+    max-width: 1140px;
+    width: 90%;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    margin: auto;
+}
+
+.customMenu2 a{
+    font-size: 16px;
+    color: #215FAC;
+}
+
+.customMenu2 .submit{
+    margin-left: auto;
+}
+
+.customMenu2 .submit img{
+    padding: 0px 4px 0px 0px;
+}
+
+.customMenu2 .customSelect{
+    width: auto;
+    height: 38px;
+    padding: 6px 28px 6px 12px;
+}
+
+
+/* menu 3 */
+
+.menu3{
+    display: flex;
+    align-items: center;
+}
+
+.customMenu3{
+    max-width: 1140px;
+    width: 100%;
+    height: 113px;
+    display: flex;
+    align-items: center;
+}
+
+.customMenu3 .Logo{
+    width: 50%;
+}
+
+.customMenu3 .search{
+    width: 50%;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.customMenu3 .search .input-group{
+    width: 100%;
+    height: 53px;
+    margin-top: 10px;
+    padding-bottom: 8px;
+}
+
+.customMenu3 .search a{
+    color: #215FAC;
+    margin-left: auto;
+}
+
+.customMenu3 .search button{
+    width: 50px;
+    height: 45.6px;
+    background-color: #042C78;
+    color: white;
+}
+
+.customMenu3 .search button:hover{
+    background-color: #0042bd;
+}
+
+.customMenu3 .search a{
+    font-size: 14px;
+}
+
+/* menu 4 */
+.menu4{
+    max-width: 1140px;
+    height: 57.8px;
+    margin: auto;
+}
+
+
+.menu4 .nav-item{
+   padding: 5px;
+   height: 41.8px;
+   margin:auto;
+}
+
+.menu4 .nav-item>a{
+    color: #212121;
+    font-size: 16px;
+ }
+
+ .menu4 .nav-item>a:hover{
+    color: #215FAC;
+ }
+
+ /* ------------------------- main -------------------------*/
+
+ #main{
+    margin-top: 20px;
+    width: 100%;
+    height: 480.4px;
+ }
+
+ .login>form{
+    margin: auto;
+    width: 500px;
+ }
+
+ .login>h2{
+    font-size: 16px;
+    color: #212121;
+    margin: 16px 0px;
+ }
+ .login p span{
+    font-size: 16px;
+    font-weight: 600;
+    color: #212121;
+ }
+
+ .login p{
+    margin: 0px 0px 16px;
+ }
+
+ .login .form-group input{
+    padding: 11px 15px;
+    margin: 0px 0px 10px;
+    width: 500px;
+    height: 47.6px;
+    border-radius: 3px;
+ }
+
+ .login .form-check{
+    margin:0px 0px 16px;
+ }
+
+ .login a{
+    color: #215FAC;
+ }
+
+ .login .form-check label{
+    color: #212121;
+    font-size: 16px;
+ }
+
+ .login #btnSignIn{
+    width: 100%;
+    background-color: #002C78;
+    color: #FFFFFF;
+    font-size: 16px;
+    margin: 10px 0px;
+    padding: 11px 26px;
+ }
+
+ .login #btnSignIn:hover{
+    background-color: #0039a2;
+ }
+
+ .login #registerBtn{
+    padding: 7px 20px;
+    margin: 10px 0px;
+    font-size: 16px;
+    border: 2px solid #002C78;
+    font-weight: 600;
+    color: #002C78;
+    background-color: #FFFFFF;
+ }
+
+ .login #registerBtn:hover{
+    background-color: #002C78;
+    color: #ffffff;
+ }
+
+ /*------------------- css footer ------------------------*/
+
+
+ .customFooter{
+    max-width: 1140px;
+ }
+ #footer p{
+    font-size: 16px;
+    color: #212121;
+    font-weight: 500;
+ }
+
+ #footer h4{
+    font-size: 16px;
+    color: #212121;
+    font-weight: 400;
+ }
+
+ #footer a{
+    font-size: 16px;
+    color: #212121;
+ }
+
+ #footer .icon-w20{
+    margin-left: auto;
+ }
+
+ #footer>.border-top .btn-group{
+    background-color: aqua;
+    margin-left: auto;
+ }
+
+ #footer i{
+    color: #383838;
+    font-size: 18px;
+    padding: 0px 16px 0px 0px;
+ }
