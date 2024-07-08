@@ -1,0 +1,180 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+/* CSS partner */
+.partner {
+    background-color: #042c78;
+    display: flex;
+}
+
+.partner-name {
+    color: #ffffff;
+    padding: 0.25rem 0 0 7.5rem;
+}
+
+.partner .list-partner {
+    background-color: #042c78;
+    color: #ffffff;
+    height: 3.5rem;
+}
+
+.partner .list-partner ul {
+    display: flex;
+    flex-direction: row;
+    padding: 0 8px;
+    margin: 0;
+    list-style-type: none;
+}
+
+.partner .list-partner ul li {
+    padding: 20px; 
+    list-style-type: none;
+}
+
+.partner .list-partner ul li:hover {
+    background-color: #ffffff;
+    cursor: pointer;
+    color: #042c78;
+}
+/* CSS header */
+.nav {
+    display: flex;
+    padding: 0.25rem 8rem 0 4rem;
+    justify-content: space-between;
+    border-bottom: solid 1px #dee2e6;
+}
+
+.nav ul li {
+    list-style-type: none;
+}
+
+.nav .navbar ul{
+    display: flex;
+}
+
+.navbar ul li {
+    padding: 0 16px;
+    border-right: solid 1px #dee2e6;
+    color: #042c78;
+}
+
+.navbar ul li:last-child {
+    border-right: none;
+}
+
+.avt-user, .rs-show {
+    display: none;
+}
+
+
+
+.navbar ul li:hover {
+    cursor: pointer;
+}
+/* CSS search area */
+.search-area {
+    display: flex;
+    padding: 2rem 8rem 2rem 7rem;
+    justify-content: space-between;
+    border-bottom: solid 1px #dee2e6;
+}
+
+.search .search-group {
+    display: flex;
+    margin-top: 16px;
+}
+
+.search .search-group .input {
+    width: 25rem;
+    padding: 12px 16px;
+    border-right: none;
+    border: solid 1px #61a6c9;
+}
+
+.search-group .search-icon {
+    background-color: #042c78;
+    padding: 12px 16px;
+    color: #ffffff;
+}
+
+.search .search-advanced {
+    float: right;
+    color: #61a6c9;
+    margin-top: 8px;
+}
+
+.search-group .search-icon:hover {
+    cursor: pointer;
+    opacity: 0.9;
+}
+
+/* Responsive */
+
+@media (max-width: 1080px) {
+    .rs-show {
+        display: block;
+    }
+
+    .nav-down {
+        margin: 22px 16px;
+        color: #ffffff;
+    }
+
+    .nav-down:hover {
+        cursor: pointer;
+    }
+
+    .partner {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .partner-name {
+        padding: 0.25rem 0;
+    }
+
+    .header-partner {
+        display: flex;
+    }
+
+    .list-partner, .nav {
+        display: none;
+    }
+
+    .rs-nav {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .search-area {
+        flex-direction: column;
+    }
+
+    .icon {
+        margin: 8px 16px;
+        font-size: 1.5rem;
+    }
+
+    .icon:hover {
+        cursor: pointer;
+    }
+
+    .rs-nav img {
+        height: 45px;
+    }
+
+    .search-area .search {
+        display: flex;
+        flex-direction: column;
+        text-align: right;
+        margin-left: 1rem;
+        width: 93%;
+    }
+
+    .search .search-advanced {
+        font-size: 0.75rem;
+    }
+}

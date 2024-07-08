@@ -1,0 +1,145 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.footer {
+    text-align: left;
+    padding: 0.25rem 7.5rem 0 7.5rem;
+    font-size: 0.8rem;
+}
+
+.footer ul li {
+    list-style-type: none;
+    padding-bottom: 8px;
+}
+
+.footer-content div p {
+    font-weight: bold;
+}
+
+.content-up, .content-down, .footer-content, .content-left {
+    display: flex;
+}
+
+.content-left div ul {
+    text-align: left;
+    margin-left: -2.5rem;
+}
+
+.content-right .content-up, .content-left {
+    flex-direction: column;
+}
+
+.content-left, .content-right {
+    width: 50%;
+}
+
+.content-left .left, .content-left .right {
+    width: 100%;
+}
+
+.content-left {
+    border-right: 1px solid #d3d3d3;
+}
+
+.content-right {
+    margin-left: 16px;
+}
+
+.right {
+    padding-left: 4rem;
+} 
+
+.logo-item {
+    width: 100%;
+    display: flex;
+    margin: 1rem 0;
+    padding-bottom: 1rem;
+}
+
+.logo-item img {
+    width: 50%;
+}
+
+.logo-item .left, .logo-item .right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-item span {
+    margin-top: 8px;
+}
+
+.content-right .content-down {
+    border-top: 1px solid #d3d3d3;
+}
+
+.content-media, .content-media ul {
+    display: flex;
+}
+
+.content-media ul {
+    margin-left: -2.9rem;
+    font-size: 1.25rem;
+    margin-top: -0.25rem;
+    opacity: 0.6;
+}
+
+.content-media ul li {
+    margin-right: 8px;
+}
+
+.footer-copyright {
+    border-top: 1px solid #d3d3d3;
+    margin-top: 16px;
+}
+
+.copyright-content {
+    margin-top: 16px;
+    opacity: 0.8;
+}
+
+.footer-copyright .footer-nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-copyright ul {
+    display: flex;
+    margin-left: -2.5rem;
+}
+
+.footer-copyright ul li {
+    margin-right: 8px;
+}
+
+.footer ul li:hover, .logo-item img:hover, .content-media span {
+    cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 1080px) {
+    .footer {
+        padding: 0.25rem 4rem 0 4rem;
+    }
+
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .footer-content .content-left {
+        border-right: none;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 0.25rem 1rem 0 1rem;
+    }
+}
+
