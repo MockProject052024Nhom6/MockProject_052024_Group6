@@ -44,6 +44,7 @@ public class AssetEntity extends AbstractEntity{
     private String quantity;
 
     @Column(name = "status_asset")
+    @Enumerated(EnumType.STRING)
     private AssetStatus assetStatus;
 
     @Column(name = "status")

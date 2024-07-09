@@ -1,6 +1,7 @@
 package com.mockproject.AuctionManagement.entity;
 
 import com.mockproject.AuctionManagement.enums.AuctionStatus;
+import com.mockproject.AuctionManagement.enums.TypeAuction;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,7 +41,8 @@ public class AuctionEntity extends AbstractEntity{
     private Date endTime;
 
     @Column(name = "type_auction")
-    private String typeAuction;
+    @Enumerated(EnumType.STRING)
+    private TypeAuction typeAuction;
 
     @Column(name = "auction_status")
     @Enumerated(EnumType.STRING)
@@ -52,8 +54,8 @@ public class AuctionEntity extends AbstractEntity{
     @OneToMany(mappedBy = "auctionEntity")
     private Set<UserHasAuctionEntity> userHasAuctionEntities = new HashSet<>();
 
-    @OneToOne()
-    @JoinColumn(name = "id_host")
+    @ManyToOne()
+    @JoinColumn(name = "id_auctioneer")
     private UserEntity userEntity;
 
     @OneToMany(mappedBy = "auctionEntity")

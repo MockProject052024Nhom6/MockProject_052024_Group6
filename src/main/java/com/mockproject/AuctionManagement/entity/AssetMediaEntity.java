@@ -24,6 +24,7 @@ public class AssetMediaEntity extends AbstractEntity{
     private String link;
 
     @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private TypeMedia type;
 
     @Column(name = "description")

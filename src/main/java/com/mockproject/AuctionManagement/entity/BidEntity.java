@@ -28,7 +28,7 @@ public class BidEntity extends AbstractEntity{
     private Date bidTime;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "id_user")
     private UserEntity userEntity;
 
     @ManyToOne

@@ -29,9 +29,10 @@ public class FeeEntity extends AbstractEntity{
     private Double cost;
 
     @Column(name = "payment_status")
+    @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
-    @Column(name = "paymen_date")
+    @Column(name = "payment_date")
     @Temporal(TemporalType.DATE)
     private Date paymentDate;
 

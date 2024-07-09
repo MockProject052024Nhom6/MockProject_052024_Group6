@@ -31,7 +31,7 @@ public class InformationAccountEntity extends AbstractEntity{
     @Column(name = "cvv")
     private Integer cvv;
 
-    @Column(name = "billin_address")
+    @Column(name = "billing_address")
     private String billingAddress;
 
     @Column(name = "postal_code")

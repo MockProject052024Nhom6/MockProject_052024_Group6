@@ -30,6 +30,7 @@ public class AuctionHasAssetEntity extends AbstractEntity{
     private Double presentPrice;
 
     @Column(name = "auction_results")
+    @Enumerated(EnumType.STRING)
     private AuctionResults auctionResults;
 
     @Column(name = "status")
