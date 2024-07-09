@@ -90,24 +90,24 @@ public class UserEntity extends AbstractEntity{
     @Column(name = "status")
     private Integer status;
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity" , fetch = FetchType.LAZY)
     private Set<UserHasRoleEntity> userHasRoleEntities = new HashSet<>();
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
     private Set<InformationAccountEntity> informationAccountEntities = new HashSet<>();
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
     private Set<UserHasNotificationEntity> userHasNotificationEntities = new HashSet<>();
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
     private Set<TransactionHistoryEntity> transactionHistoryEntities = new HashSet<>();
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
     private Set<UserHasAuctionEntity> userHasAuctionEntities = new HashSet<>();
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
     private Set<ContractEntity> contractEntities = new HashSet<>();
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
     private Set<BidEntity> bidEntities = new HashSet<>();
 }
