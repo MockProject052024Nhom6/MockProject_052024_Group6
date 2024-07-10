@@ -15,7 +15,9 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "tbl_role")
+
 public class RoleEntity extends AbstractEntity{
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

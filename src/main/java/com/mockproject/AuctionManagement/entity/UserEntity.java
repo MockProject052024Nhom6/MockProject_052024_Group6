@@ -19,8 +19,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "`tbl_user`")
-public class UserEntity extends AbstractEntity{
+@Table(name = "tbl_user")
+public class UserEntity extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -91,7 +91,7 @@ public class UserEntity extends AbstractEntity{
     @Column(name = "status")
     private Integer status;
 
-    @OneToMany(mappedBy = "userEntity" , fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<UserHasRoleEntity> userHasRoleEntities = new HashSet<>();
 
