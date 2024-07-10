@@ -7,6 +7,7 @@ import com.mockproject.AuctionManagement.dto.response.AuthenticationResponse;
 import com.mockproject.AuctionManagement.dto.response.IntrospectResponse;
 import com.mockproject.AuctionManagement.entity.InvalidatedToken;
 import com.mockproject.AuctionManagement.entity.UserEntity;
+import com.mockproject.AuctionManagement.entity.RoleEntity;
 import com.mockproject.AuctionManagement.exception.AppException;
 import com.mockproject.AuctionManagement.exception.ErrorCode;
 import com.mockproject.AuctionManagement.repository.InvalidatedTokenRepository;
@@ -30,7 +31,9 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -78,12 +81,17 @@ public class AuthenticationService {
         String accessToken = generateAccessToken(user);
         String refreshToken = generateRefreshToken(user);
 
+        List<String> roleNames = user.getUserHasRoleEntities().stream()
+                .map(userHasRole -> userHasRole.getRoleEntity().getRoleName())
+                .collect(Collectors.toList());
+
         return AuthenticationResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .authenticated(true)
-                .roles(user.getRoles()) // Ensure roles are set
-                .username(user.getUsername()) // Ensure username is set
+                .roles(roleNames)
+                .idUser(user.getIdUser())
+                .username(user.getUsername())
                 .message("Login successful")
                 .build();
     }

@@ -16,7 +16,8 @@ public class AuthenticationResponse {
     private String accessToken;
     private String refreshToken;
     private String message = "Login successful";
-    private Set<RoleEntity> roles;
+    private Long idUser;
+    private List<String> roles;
     private boolean authenticated;
     private String username;
 }

@@ -19,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "`tbl_user`")
-public class UserEntity extends AbstractEntity{
+public class UserEntity extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -90,7 +90,7 @@ public class UserEntity extends AbstractEntity{
     @Column(name = "status")
     private Integer status;
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.EAGER)
     private Set<UserHasRoleEntity> userHasRoleEntities = new HashSet<>();
 
     @OneToMany(mappedBy = "userEntity")
@@ -110,15 +110,4 @@ public class UserEntity extends AbstractEntity{
 
     @OneToMany(mappedBy = "userEntity")
     private Set<BidEntity> bidEntities = new HashSet<>();
-<<<<<<< HEAD
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles", // Tên bảng liên kết
-            joinColumns = @JoinColumn(name = "user_id"), // Tên cột trong bảng user_entity
-            inverseJoinColumns = @JoinColumn(name = "id_role") // Tên cột trong bảng tbl_role
-    )
-    private Set<RoleEntity> roles = new HashSet<>();
-=======
->>>>>>> 493b32c857be102df05a470798999e6143403954
 }

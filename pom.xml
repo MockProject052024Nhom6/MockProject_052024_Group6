@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.3.1</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.mockproject</groupId>
 	<artifactId>AuctionManagement</artifactId>
@@ -31,27 +31,17 @@
 	</properties>
 	<dependencies>
 		<dependency>
-<<<<<<< HEAD
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
 
 		<dependency>
-=======
->>>>>>> 493b32c857be102df05a470798999e6143403954
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-<<<<<<< HEAD
-=======
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
->>>>>>> 493b32c857be102df05a470798999e6143403954
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<dependency>
@@ -60,7 +50,6 @@
 		</dependency>
 
 		<dependency>
-<<<<<<< HEAD
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
@@ -72,17 +61,6 @@
 			<version>9.4.1.jre8</version>
 		</dependency>
 
-=======
-			<groupId>com.microsoft.sqlserver</groupId>
-			<artifactId>mssql-jdbc</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
->>>>>>> 493b32c857be102df05a470798999e6143403954
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -90,7 +68,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
-<<<<<<< HEAD
 			<artifactId>spring-security-crypto</artifactId>
 		</dependency>
 		<dependency>
@@ -124,17 +101,11 @@
 			<version>1.5.5.Final</version>
 		</dependency>
 
-=======
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
->>>>>>> 493b32c857be102df05a470798999e6143403954
 	</dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
-<<<<<<< HEAD
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
@@ -157,8 +128,6 @@
 			</plugin>
 
 			<plugin>
-=======
->>>>>>> 493b32c857be102df05a470798999e6143403954
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
@@ -172,7 +141,6 @@
 			</plugin>
 		</plugins>
 	</build>
-<<<<<<< HEAD
 	<repositories>
 		<repository>
 			<id>spring-snapshots</id>
@@ -193,7 +161,5 @@
 			</releases>
 		</pluginRepository>
 	</pluginRepositories>
-=======
->>>>>>> 493b32c857be102df05a470798999e6143403954
 
 </project>
