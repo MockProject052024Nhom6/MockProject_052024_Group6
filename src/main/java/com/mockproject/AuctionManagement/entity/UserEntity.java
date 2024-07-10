@@ -110,6 +110,7 @@ public class UserEntity extends AbstractEntity{
 
     @OneToMany(mappedBy = "userEntity")
     private Set<BidEntity> bidEntities = new HashSet<>();
+<<<<<<< HEAD
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -118,4 +119,6 @@ public class UserEntity extends AbstractEntity{
             inverseJoinColumns = @JoinColumn(name = "id_role") // Tên cột trong bảng tbl_role
     )
     private Set<RoleEntity> roles = new HashSet<>();
+=======
+>>>>>>> 493b32c857be102df05a470798999e6143403954
 }

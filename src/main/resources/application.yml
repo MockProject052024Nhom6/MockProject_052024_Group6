@@ -1,0 +1,17 @@
+server:
+  port: 8888
+
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=auction_management;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: 12345
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    open-in-view: false
