@@ -376,3 +376,18 @@ VALUES
     (5, 18, 900.00, '2024-07-10 13:00:00'),
     (14, 19, 800.00, '2024-07-10 14:00:00'),
     (20, 20, 1200.00, '2024-07-10 15:00:00');
+
+INSERT INTO tbl_holidays (holiday_date, holiday_name, holiday_type, status)
+VALUES
+    ('2025-01-01', 'New Year''s Day', 'Federal', 1),
+    ('2025-01-20', 'Martin Luther King, Jr. Day', 'Federal', 1),
+    ('2025-02-17', 'Presidents'' Day', 'Federal', 1),
+    ('2025-05-26', 'Memorial Day', 'Federal', 1),
+    ('2025-07-04', 'Independence Day', 'Federal', 1),
+    ('2025-09-01', 'Labor Day', 'Federal', 1),
+    ('2025-10-13', 'Columbus Day', 'Federal', 1),
+    ('2025-11-11', 'Veterans Day', 'Federal', 1),
+    ('2025-11-27', 'Thanksgiving Day', 'Federal', 1),
+    ('2025-12-25', 'Christmas Day', 'Federal', 1),
+    ('2025-03-31', 'Cesar Chavez Day', 'State', 1), -- California
+    ('2025-06-25', 'Kamehameha Day', 'State', 1); -- Hawaii
