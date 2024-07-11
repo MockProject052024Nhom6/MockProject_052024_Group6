@@ -3,20 +3,28 @@ package com.mockproject.AuctionManagement.service;
 import com.mockproject.AuctionManagement.dto.request.AuthenticationRequest;
 import com.mockproject.AuctionManagement.dto.request.IntrospectRequest;
 import com.mockproject.AuctionManagement.dto.request.RefreshRequest;
+import com.mockproject.AuctionManagement.dto.request.RegisterRequestDTO;
 import com.mockproject.AuctionManagement.dto.response.AuthenticationResponse;
 import com.mockproject.AuctionManagement.dto.response.IntrospectResponse;
 import com.mockproject.AuctionManagement.entity.InvalidatedToken;
 import com.mockproject.AuctionManagement.entity.UserEntity;
 import com.mockproject.AuctionManagement.entity.RoleEntity;
+import com.mockproject.AuctionManagement.entity.UserHasRoleEntity;
+import com.mockproject.AuctionManagement.enums.UserStatus;
 import com.mockproject.AuctionManagement.exception.AppException;
 import com.mockproject.AuctionManagement.exception.ErrorCode;
 import com.mockproject.AuctionManagement.repository.InvalidatedTokenRepository;
+import com.mockproject.AuctionManagement.repository.RoleRepository;
+import com.mockproject.AuctionManagement.repository.UserHasRoleRepository;
 import com.mockproject.AuctionManagement.repository.UserRepository;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -30,9 +38,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,8 +46,13 @@ import java.util.stream.Collectors;
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationService {
+
+    @PersistenceContext
+    private EntityManager entityManager;
     UserRepository userRepository;
     InvalidatedTokenRepository invalidatedTokenRepository;
+    RoleRepository roleRepository;
+    UserHasRoleRepository userHasRoleRepository;
 
     @NonFinal
     @Value("${jwt.signerKey}")
@@ -109,8 +120,7 @@ public class AuthenticationService {
 
         var username = signedJWT.getJWTClaimsSet().getSubject();
 
-        var user =
-                userRepository.findByUsername(username).orElseThrow(() -> new AppException(ErrorCode.UNAUTHENTICATED));
+        var user = userRepository.findByUsername(username).orElseThrow(() -> new AppException(ErrorCode.UNAUTHENTICATED));
 
         String accessToken = generateAccessToken(user);
         String refreshToken = generateRefreshToken(user);
@@ -174,5 +184,51 @@ public class AuthenticationService {
             throw new AppException(ErrorCode.UNAUTHENTICATED);
 
         return signedJWT;
+    }
+
+    @Transactional
+    public AuthenticationResponse register(RegisterRequestDTO request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new RuntimeException("Email already in use");
+        }
+
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        RoleEntity role = roleRepository.findByRoleName("User").orElseThrow(() -> new RuntimeException("Role not found"));
+
+        UserEntity user = UserEntity.builder()
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .userStatus(UserStatus.ACTIVE)
+                .status(1)
+                .build();
+
+        UserHasRoleEntity userHasRoleEntity = UserHasRoleEntity.builder()
+                .roleEntity(role)
+                .userEntity(user)
+                .build();
+
+        userRepository.save(user);
+        userHasRoleRepository.save(userHasRoleEntity);
+
+        entityManager.flush();
+        entityManager.refresh(user);
+
+        String accessToken = generateAccessToken(user);
+        String refreshToken = generateRefreshToken(user);
+
+        List<String> roleNames = user.getUserHasRoleEntities().stream()
+                .map(userHasRole -> userHasRole.getRoleEntity().getRoleName())
+                .collect(Collectors.toList());
+
+        return AuthenticationResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .authenticated(true)
+                .idUser(user.getIdUser())
+                .username(user.getUsername())
+                .roles(roleNames)
+                .build();
     }
 }
