@@ -1,0 +1,79 @@
+:root {
+    --color-primary: #042C78;
+    --color-hover: #FFFFFF;
+    --color-link: #215FAC;
+    --color-body: #212121;
+    --color-hover-button: #0039a2;
+    --color-background: #FFFFFF;
+    --color-button: #002C78;
+    --color-footer-icon: #383838;
+    --font-size-big: 22px;
+    --font-size-small: 14px;
+    --box-shadow-menu: 0px 0px 10px rgba(76, 76, 76, 0.745);
+    --box-text-shadow-light: 0px 0px 5px rgb(255, 255, 255);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+}
+
+/*-------------------------------- menu ------------------------------*/
+
+#menu{
+    width: 100%;
+    height: auto;
+}
+
+.menu nav{
+    background-color: var(--color-button);
+    width: 100%;
+    margin: auto;
+    color: var(--color-background);
+}
+
+#menu nav a{
+   font-size: var(--font-size-big);
+   color: var(--color-background);
+}
+
+#menu .customLogin{
+    display: flex;
+}
+
+#menu #login,#menu #register{
+    text-align: center;
+    border: 2px solid white;
+    border-radius: 5px;
+    margin-left: 10px;
+    font-size: var(--font-size-small);
+}
+
+#menu #login:hover,#menu #register:hover{
+    background-color: var(--color-background);
+    color: var(--color-button);
+    box-shadow: var(--box-text-shadow-light);
+}
+
+#menu .custom-toggler {
+    background-color: #ffffff; 
+}
+
+#menu .customCollapse{
+    background-color:var(--color-link);
+}

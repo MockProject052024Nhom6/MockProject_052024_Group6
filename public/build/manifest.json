@@ -1,0 +1,18 @@
+{
+  "resources/css/home/responsive.css": {
+    "file": "assets/responsive-BRswhRRX.css",
+    "src": "resources/css/home/responsive.css",
+    "isEntry": true
+  },
+  "resources/css/home/style.css": {
+    "file": "assets/style-vRtVAtXR.css",
+    "src": "resources/css/home/style.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-C1-XIpUa.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}

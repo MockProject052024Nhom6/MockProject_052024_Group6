@@ -1,11 +1,5 @@
-/.phpunit.cache
-/node_modules
-/public/build
-/public/hot
-/public/storage
+
 /storage/*.key
-.phpactor.json
-.phpunit.result.cache
 Homestead.json
 Homestead.yaml
 auth.json
