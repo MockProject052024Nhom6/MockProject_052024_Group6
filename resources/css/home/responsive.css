@@ -1,7 +1,13 @@
-#menu .menu nav{
+
+
+#menu .menu nav,
+#hero .hero,
+#hero .container{
+    min-width: 480px;
     max-width: 1250px;
 }
 
+/*-------------------- media -------------------*/
 @media only screen and (max-width: 992px) {
     #menu .customLogin{
        margin-top: 10px;
@@ -11,4 +17,30 @@
     #menu .customLogin a{
         margin-top: 10px;
     }
+}
+
+@media only screen and (max-width: 768px) {
+
+    #hero .hero{
+        position: relative;
+    }
+
+    #hero .custom-hero-row{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 110%;
+    }
+
+   #hero .input-group-text,#hero .input-group select{
+    height: 30px;
+    font-size: small;
+   }
+
+   #hero .input-group.right input,#hero .input-group.right button{
+      height: 30px;
+      font-size: small;
+   }
+    
 }

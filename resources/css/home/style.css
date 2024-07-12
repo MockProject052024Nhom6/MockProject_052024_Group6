@@ -33,12 +33,14 @@ body {
     font-style: normal;
 }
 
-/*-------------------------------- menu ------------------------------*/
-
-#menu{
+section{
     width: 100%;
     height: auto;
 }
+
+/*-------------------------------- menu ------------------------------*/
+
+
 
 .menu nav{
     background-color: var(--color-button);
@@ -76,4 +78,39 @@ body {
 
 #menu .customCollapse{
     background-color:var(--color-link);
+}
+
+
+/*----------------------------- hero ------------------------------------*/
+
+#hero .hero{
+    margin: auto;
+}
+
+#hero .hero{
+    background-image: url('/public/image/bg-hero.svg');
+    background-size: cover;
+    background-position: bottom;
+    padding: 50px;
+}
+
+#hero .custom-hero-row{
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    width: 100%;
+    height: 100px;
+    background-color: rgba(78, 78, 78, 0.712);
+    border-radius: 10px;
+}
+
+#hero .btn{
+    background-color: var(--color-button);
+    border: none;
+}
+
+#hero .btn:hover{
+    background-color: var(--color-hover);
+    color: var(--color-hover-button);
+    box-shadow: 2px 0px 10px rgb(17, 36, 210);
 }
