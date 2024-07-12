@@ -35,9 +35,12 @@
     {{-- hero --}}
     @include('home.layout.hero')
 
+    {{-- card --}}
+    @include('home.layout.card')
+
 
     {{-- footer --}}
-    {{-- @include('home.layout.footer') --}}
+    @include('home.layout.footer')
 
     
     <!-- Bootstrap JS and dependencies -->
