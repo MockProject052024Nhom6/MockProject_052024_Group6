@@ -19,7 +19,7 @@ from datetime import timedelta
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Load environment variables
-load_dotenv(os.path.join(BASE_DIR, '.env'))
+load_dotenv()
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-9%%f+#lb6gs%m5v5l+swozk0l9kens9@*9-f@0ww2&%ubww+gn'
@@ -40,9 +40,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
-    'corsheaders',
     'drf_yasg',
+    'corsheaders',
     'users',
+    'auctions',
+    'assets'
 ]
 
 MIDDLEWARE = [

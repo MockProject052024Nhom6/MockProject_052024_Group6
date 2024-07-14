@@ -1,29 +1,27 @@
 from rest_framework import serializers
-from django.contrib.auth import authenticate
+from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from .models import User
+
+User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'id', 'username', 'email', 'first_name', 'last_name', 'date_of_birth', 'phone',
+            'id', 'email', 'first_name', 'last_name', 'role', 'date_of_birth', 'phone',
             'another_phone', 'gender', 'country', 'city', 'state', 'avatar',
             'credibility', 'identification_card', 'created_date'
         ]
+        read_only_fields = ['id', 'role', 'credibility', 'created_date']
 
-        read_only_fields = ['id', 'credibility', 'created_date', 'is_active']
-
-class RegisterSerializer(serializers.ModelSerializer):
+class SignUpSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = User
-        
-        fields = ['username', 'email', 'first_name', 'last_name' , 'password', 'confirm_password']
+        fields = ['email', 'first_name', 'last_name', 'password', 'confirm_password']
         extra_kwargs = {
-            'username': {'required': True},
             'email': {'required': True},
             'first_name': {'required': True},
             'last_name': {'required': True},
@@ -32,18 +30,12 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs['password'] != attrs['confirm_password']:
-            raise serializers.ValidationError({"confirm_password": "Password fields didn't match."})
+            raise serializers.ValidationError({"message": "Password fields didn't match."})
         return attrs
 
     def create(self, validated_data):
-        user = self.Meta.model.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
-        )
-        user.set_password(validated_data['password'])
-        user.save()
+        validated_data.pop('confirm_password')
+        user = User.objects.create_user(**validated_data)
         return user
     
     
@@ -85,21 +77,3 @@ class ChangePasswordSerializer(serializers.Serializer):
         user.set_password(new_password)
         user.save()
         return user
-    
-
-class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField()
-    password = serializers.CharField(write_only=True)
-
-    def validate(self, attrs):
-        username = attrs['username']
-        password = attrs['password']
-
-        if username and password:
-            user = authenticate(username=username, password=password)
-            if not user:
-                raise serializers.ValidationError('Invalid credentials')
-        else:
-            raise serializers.ValidationError('Must include "username" and "password"')
-
-        return attrs
