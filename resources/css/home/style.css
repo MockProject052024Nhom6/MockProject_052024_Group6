@@ -1,0 +1,229 @@
+:root {
+    --color-primary: #042C78;
+    --color-hover: #FFFFFF;
+    --color-link: #215FAC;
+    --color-body: #212121;
+    --color-hover-button: #0039a2;
+    --color-background: #FFFFFF;
+    --color-background-dd: #f7f7f7e7;
+    --color-button: #002C78;
+    --color-footer-icon: #383838;
+    --color-shadow:rgba(75, 75, 75, 0.844);
+    --font-size-big: 22px;
+    --font-size-small: 14px;
+    --box-shadow-menu: 0px 0px 10px rgba(76, 76, 76, 0.745);
+    --box-text-shadow-light: 0px 0px 5px rgb(255, 255, 255);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    background-color: var(--color-background-dd);
+}
+
+section{
+    width: 100%;
+    height: auto;
+}
+
+/*-------------------------------- menu ------------------------------*/
+
+
+
+.menu nav{
+    background-color: var(--color-button);
+    width: 100%;
+    margin: auto;
+    color: var(--color-background);
+}
+
+#menu nav a{
+   font-size: medium;
+   color: var(--color-background);
+}
+
+#menu nav .custom-menu-ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#menu #logo{
+    font-size: x-large;
+}
+
+#menu .customLogin{
+    display: flex;
+}
+
+#menu #login,#menu #register{
+    text-align: center;
+    border: 2px solid white;
+    border-radius: 5px;
+    margin-left: 10px;
+    font-size: var(--font-size-small);
+}
+
+#menu #login:hover,#menu #register:hover{
+    background-color: var(--color-background);
+    color: var(--color-button);
+    box-shadow: var(--box-text-shadow-light);
+}
+
+#menu .custom-toggler {
+    background-color: #ffffff; 
+}
+
+#menu .customCollapse{
+    background-color:var(--color-link);
+}
+
+
+/*----------------------------- hero ------------------------------------*/
+
+#hero .hero{
+    margin: auto;
+}
+
+#hero .hero{
+    background-image: url('/public/image/bg-hero.svg');
+    background-size: cover;
+    background-position: bottom;
+    padding: 50px;
+    box-shadow: 0px 5px 10px var(--color-shadow);
+}
+
+#hero .custom-hero-row{
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    width: 100%;
+    height: 100px;
+    background-color: rgba(48, 48, 48, 0.67);
+    border-radius: 10px;
+}
+
+#hero .btn{
+    background-color: var(--color-button);
+    border: none;
+}
+
+#hero .btn:hover{
+    background-color: var(--color-hover);
+    color: var(--color-hover-button);
+    box-shadow: 2px 0px 10px rgb(17, 36, 210);
+}
+
+/*------------------------------------------ card ---------------------------------*/
+
+#card .container{
+    margin-top: 25px;
+}
+
+#card .custom-card-text{
+    background-color: rgb(255, 255, 255);
+    width: 40%;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px var(--color-shadow);
+}
+
+#card h3{
+    margin: auto;
+    padding: 5px;
+}
+
+#card #listCard .card:hover{
+    box-shadow: 5px 5px 15px var(--color-shadow);
+}
+
+#card .custom-list-inline{
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px var(--color-shadow);
+}
+
+#card .custom-list-inline ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+#card .custom-list-inline ul li a{
+    color: var(--color-button);
+}
+
+#card .custom-list-inline ul li a:hover{
+    text-shadow: 0px 0px 3px rgba(0, 195, 255, 0.581);
+}
+
+/*---------------------------------- footer --------------------------------*/
+
+#footer footer
+{
+    margin: auto;
+    background-color: var(--color-button);
+}
+
+#footer .custom-footer-top{
+    padding-bottom: 30px;
+}
+
+#footer footer a,
+#footer footer p,
+#footer footer h4
+{
+    color: var(--color-hover);
+}
+
+#footer footer p{
+    font-size: x-large;
+}
+
+#footer i{
+    font-size: large;
+    color: var(--color-hover);
+}
+
+#footer .row{
+    margin-left: auto;
+}
+
+#footer .custom-footer-bot{
+    padding-top: 20px;
+}
+
+#footer .custom-footer-bot .text-right{
+    margin-left: auto;
+}
+
+#footer .custom-footer-bot .row{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+#footer .custom-footer-bot .row ul{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
