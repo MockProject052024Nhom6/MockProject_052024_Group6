@@ -1,12 +1,10 @@
 package com.mockproject.AuctionManagement.entity;
 
 import com.mockproject.AuctionManagement.enums.AssetStatus;
+import com.mockproject.AuctionManagement.enums.TypeAuction;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "tbl_asset")
 public class AssetEntity extends AbstractEntity{
 
@@ -33,15 +32,22 @@ public class AssetEntity extends AbstractEntity{
     @Column(name = "size")
     private String size;
 
+    @Column(name = "estimated_value")
+    private Double estimatedValue;
+
     @Column(name = "origin")
     private String origin;
 
     @Column(name = "property_status")
     private String propertyStatus;
 
+    @Column(name = "type_auction")
+    @Enumerated(EnumType.STRING)
+    private TypeAuction typeAuction;
+
     @Column(name = "quantity")
     @Min(1)
-    private String quantity;
+    private Integer quantity;
 
     @Column(name = "status_asset")
     @Enumerated(EnumType.STRING)
