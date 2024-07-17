@@ -3,7 +3,6 @@ package com.mockproject.AuctionManagement.controller;
 import com.mockproject.AuctionManagement.dto.UserDTO;
 import com.mockproject.AuctionManagement.entity.UserEntity;
 import com.mockproject.AuctionManagement.service.UserService;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +25,7 @@ public class UserController {
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long idUser) {
         return ResponseEntity.of(userService.getUserWithRoles(idUser));
     }
+
     @Operation(
             summary = "Change user information",
             description = "Change user information"
@@ -34,6 +34,7 @@ public class UserController {
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserEntity userUpdate) {
         return ResponseEntity.of(userService.updateUser(userUpdate));
     }
+
     @Operation(
             summary = "Delete user",
             description = "Delete user"

@@ -1,5 +1,8 @@
 package com.mockproject.AuctionManagement.service.impl;
 
+import com.mockproject.AuctionManagement.dto.AssetByCategoryDTO;
+import com.mockproject.AuctionManagement.dto.AssetDTO;
+import com.mockproject.AuctionManagement.dto.MediaDTO;
 import com.mockproject.AuctionManagement.dto.request.AssetRequestDTO;
 import com.mockproject.AuctionManagement.dto.response.AssetResponseDTO;
 import com.mockproject.AuctionManagement.dto.response.PageResponse;
@@ -14,28 +17,11 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import com.mockproject.AuctionManagement.dto.AssetByCategoryDTO;
-import com.mockproject.AuctionManagement.dto.AssetDTO;
-import com.mockproject.AuctionManagement.dto.MediaDTO;
-import com.mockproject.AuctionManagement.entity.AssetEntity;
-import com.mockproject.AuctionManagement.entity.CategoryAssetEntity;
-import com.mockproject.AuctionManagement.repository.AssetRepository;
-import com.mockproject.AuctionManagement.repository.CategoryRepository;
-import com.mockproject.AuctionManagement.repository.MediaRepository;
-import com.mockproject.AuctionManagement.service.AssetService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +39,6 @@ public class AssetServiceImpl implements AssetService {
     AssetRepository assetRepository;
     UserRepository userRepository;
     MediaService mediaService;
-    AssetMediaRepository assetMediaRepository;
-    CategoryAssetRepository categoryAssetRepository;
     AssetRepositoryCustome assetRepositoryCustome;
     CategoryRepository categoryRepository;
     MediaRepository mediaRepository;
@@ -64,7 +48,7 @@ public class AssetServiceImpl implements AssetService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long idUser = Long.valueOf(authentication.getName());
         var seller = userRepository.findById(idUser).orElseThrow(() -> new RuntimeException("User Not Found"));
-        var cateAsset = categoryAssetRepository.findCategoryAssetEntitiesByName(request.getCategoryAsset()).orElseThrow(() -> new RuntimeException("Category Not Found"));
+        var cateAsset = categoryRepository.findCategoryAssetEntitiesByName(request.getCategoryAsset()).orElseThrow(() -> new RuntimeException("Category Not Found"));
 
         var asset = AssetEntity.builder()
                 .assetName(request.getAssetName())
@@ -92,7 +76,7 @@ public class AssetServiceImpl implements AssetService {
                             .build();
                 })
                 .collect(Collectors.toSet());
-        assetMediaRepository.saveAll(mediaEntityList);
+        mediaRepository.saveAll(mediaEntityList);
         if (videos != null) {
             String videoUrl = mediaService.upload(videos);
             var assetMedia = AssetMediaEntity.builder()
@@ -101,7 +85,7 @@ public class AssetServiceImpl implements AssetService {
                     .status(1)
                     .type(TypeMedia.VIDEOS)
                     .build();
-            assetMediaRepository.save(assetMedia);
+            mediaRepository.save(assetMedia);
         }
         if (files != null) {
             String fileUrl = mediaService.upload(files);
@@ -111,7 +95,7 @@ public class AssetServiceImpl implements AssetService {
                     .status(1)
                     .type(TypeMedia.FILES)
                     .build();
-            assetMediaRepository.save(assetMedia);
+            mediaRepository.save(assetMedia);
         }
 
         assetRepository.save(asset);
@@ -126,9 +110,9 @@ public class AssetServiceImpl implements AssetService {
                 .propertyStatus(asset.getPropertyStatus())
                 .typeAuction(asset.getTypeAuction())
                 .categoryAsset(request.getCategoryAsset())
-                .images(assetMediaRepository.findMediaByTypeAndIdMedia(asset.getIdAsset(), TypeMedia.IMAGES).orElseThrow())
-                .videos(assetMediaRepository.findMediaByTypeAndIdMedia(asset.getIdAsset(), TypeMedia.VIDEOS).orElseThrow().toString())
-                .files(assetMediaRepository.findMediaByTypeAndIdMedia(asset.getIdAsset(), TypeMedia.FILES).orElseThrow().toString())
+                .images(mediaRepository.findMediaByTypeAndIdMedia(asset.getIdAsset(), TypeMedia.IMAGES).orElseThrow())
+                .videos(mediaRepository.findMediaByTypeAndIdMedia(asset.getIdAsset(), TypeMedia.VIDEOS).orElseThrow().toString())
+                .files(mediaRepository.findMediaByTypeAndIdMedia(asset.getIdAsset(), TypeMedia.FILES).orElseThrow().toString())
                 .idSeller(idUser)
                 .idCateAsset(null)
                 .idWarehouse(null)
@@ -211,7 +195,7 @@ public class AssetServiceImpl implements AssetService {
 
     @Override
     public AssetResponseDTO updateAsset(Long idAsset, AssetRequestDTO request, List<MultipartFile> images, MultipartFile videos, MultipartFile files) {
-        var cateAsset = categoryAssetRepository.findCategoryAssetEntitiesByName(request.getCategoryAsset()).orElseThrow(() -> new RuntimeException("Category Not Found"));
+        var cateAsset = categoryRepository.findCategoryAssetEntitiesByName(request.getCategoryAsset()).orElseThrow(() -> new RuntimeException("Category Not Found"));
 
         var assetUpdate = assetRepository.findById(idAsset)
                 .map(asset -> {
@@ -242,7 +226,7 @@ public class AssetServiceImpl implements AssetService {
                             .build();
                 })
                 .collect(Collectors.toSet());
-        assetMediaRepository.saveAll(mediaEntityList);
+        mediaRepository.saveAll(mediaEntityList);
 
         if (videos != null) {
             deleteAssetMediaByTypeAndIdMedia(idAsset, TypeMedia.VIDEOS);
@@ -253,7 +237,7 @@ public class AssetServiceImpl implements AssetService {
                     .status(1)
                     .type(TypeMedia.VIDEOS)
                     .build();
-            assetMediaRepository.save(assetMedia);
+            mediaRepository.save(assetMedia);
         }
         if (files != null) {
             deleteAssetMediaByTypeAndIdMedia(idAsset, TypeMedia.FILES);
@@ -264,7 +248,7 @@ public class AssetServiceImpl implements AssetService {
                     .status(1)
                     .type(TypeMedia.FILES)
                     .build();
-            assetMediaRepository.save(assetMedia);
+            mediaRepository.save(assetMedia);
         }
 
         assetRepository.save(assetUpdate);
@@ -279,9 +263,9 @@ public class AssetServiceImpl implements AssetService {
                 .propertyStatus(assetUpdate.getPropertyStatus())
                 .typeAuction(assetUpdate.getTypeAuction())
                 .categoryAsset(request.getCategoryAsset())
-                .images(assetMediaRepository.findMediaByTypeAndIdMedia(assetUpdate.getIdAsset(), TypeMedia.IMAGES).orElseThrow())
-                .videos(assetMediaRepository.findMediaByTypeAndIdMedia(assetUpdate.getIdAsset(), TypeMedia.VIDEOS).orElseThrow().toString())
-                .files(assetMediaRepository.findMediaByTypeAndIdMedia(assetUpdate.getIdAsset(), TypeMedia.FILES).orElseThrow().toString())
+                .images(mediaRepository.findMediaByTypeAndIdMedia(assetUpdate.getIdAsset(), TypeMedia.IMAGES).orElseThrow())
+                .videos(mediaRepository.findMediaByTypeAndIdMedia(assetUpdate.getIdAsset(), TypeMedia.VIDEOS).orElseThrow().toString())
+                .files(mediaRepository.findMediaByTypeAndIdMedia(assetUpdate.getIdAsset(), TypeMedia.FILES).orElseThrow().toString())
                 .idCateAsset(null)
                 .idWarehouse(null)
                 .idAppraisers(null)
@@ -290,9 +274,9 @@ public class AssetServiceImpl implements AssetService {
     }
 
     private void deleteAssetMediaByTypeAndIdMedia(Long idAsset, TypeMedia typeMedia) {
-        List<AssetMediaEntity> assetMediaEntities = assetMediaRepository.findAssetMediaByTypeAndIdMedia(idAsset, typeMedia).orElseThrow(() -> new RuntimeException("{typeMedia} Not Found"));
+        List<AssetMediaEntity> assetMediaEntities = mediaRepository.findAssetMediaByTypeAndIdMedia(idAsset, typeMedia).orElseThrow(() -> new RuntimeException("{typeMedia} Not Found"));
         assetMediaEntities.forEach(image -> image.setStatus(0));
-        assetMediaRepository.saveAll(assetMediaEntities);
+        mediaRepository.saveAll(assetMediaEntities);
     }
 
       @Override
@@ -325,4 +309,5 @@ public class AssetServiceImpl implements AssetService {
             assetDTO.setMediaList(mediaList);
         }
         return page;
+    }
 }

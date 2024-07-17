@@ -3,27 +3,21 @@ package com.mockproject.AuctionManagement.controller;
 import com.mockproject.AuctionManagement.dto.AssetByCategoryDTO;
 import com.mockproject.AuctionManagement.dto.AssetDTO;
 import com.mockproject.AuctionManagement.dto.CategoryQuantityDTO;
+import com.mockproject.AuctionManagement.dto.request.AssetRequestDTO;
+import com.mockproject.AuctionManagement.dto.response.AssetResponseDTO;
+import com.mockproject.AuctionManagement.dto.response.ResponseData;
+import com.mockproject.AuctionManagement.dto.response.ResponseError;
 import com.mockproject.AuctionManagement.service.AssetService;
 import com.mockproject.AuctionManagement.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.*;
-
-import com.mockproject.AuctionManagement.dto.request.AssetRequestDTO;
-import com.mockproject.AuctionManagement.dto.response.AssetResponseDTO;
-import com.mockproject.AuctionManagement.dto.response.PageResponse;
-import com.mockproject.AuctionManagement.dto.response.ResponseData;
-import com.mockproject.AuctionManagement.dto.response.ResponseError;
-import com.mockproject.AuctionManagement.service.AssetService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,6 +30,7 @@ import java.util.List;
 @Slf4j
 @Tag(name = "Asset", description = "Asset API")
 public class AssetController {
+
     private final AssetService assetService;
     private final CategoryService categoryService;
 
@@ -50,6 +45,7 @@ public class AssetController {
         Pageable pageable = PageRequest.of(page, size);
         return assetService.getAllAssetsByCategory(pageable);
     }
+
     @GetMapping("/category/{category}")
     public Page<AssetDTO> getAssetsByCategory(
             @PathVariable String category,
@@ -58,11 +54,13 @@ public class AssetController {
         Pageable pageable = PageRequest.of(page, size);
         return assetService.getAssetsByCategory(category, pageable);
     }
+
     @GetMapping("/assets-catergory")
     public List<CategoryQuantityDTO> getAssetsByCategory() {
         return categoryService.getCategoryQuantity();
     }
 
+    @Operation(summary = "create new asset")
     @PostMapping()
     public ResponseData<?> addAsset(@RequestPart(value = "images", required = false) List<MultipartFile> images,
                                     @RequestPart(value = "videos", required = false) MultipartFile videos,
@@ -77,6 +75,7 @@ public class AssetController {
         }
     }
 
+    @Operation(summary = "get asset by id asset")
     @GetMapping("/{idAsset}")
     public ResponseData<?> getAssetById(@PathVariable() Long idAsset) {
         try{
@@ -88,6 +87,7 @@ public class AssetController {
         }
     }
 
+    @Operation(summary = "get all asset")
     @GetMapping()
     public ResponseData<?> getAllAssets(@Min(1) @RequestParam(required = false, defaultValue = "1") int pageNo,
                                         @RequestParam(required = false, defaultValue = "10") int pageSize) {
@@ -99,6 +99,7 @@ public class AssetController {
         }
     }
 
+    @Operation(summary = "get asset by id seller")
     @GetMapping("/sellers/{idSeller}")
     public ResponseData<?> getAllAssetsByIdSeller(@PathVariable() int idSeller,
                                                   @Min(1) @RequestParam(required = false, defaultValue = "1") int pageNo,
@@ -111,6 +112,7 @@ public class AssetController {
         }
     }
 
+    @Operation(summary = "delete asset by id asset")
     @DeleteMapping("/{idAsset}")
     public ResponseData<?> deleteAssetById(@PathVariable Long idAsset) {
         try{
@@ -122,6 +124,7 @@ public class AssetController {
         }
     }
 
+    @Operation(summary = "update asset status", description = "Reviewing property registration applications")
     @PatchMapping("/{idAsset}")
     public ResponseData<?> updateAssetStatus(@PathVariable Long idAsset) {
         try{
@@ -133,6 +136,7 @@ public class AssetController {
         }
     }
 
+    @Operation(summary = "update information asset")
     @PutMapping("/{idAsset}")
     public ResponseData<?> updateAsset(@PathVariable Long idAsset,
                                        @Valid @ModelAttribute AssetRequestDTO request,

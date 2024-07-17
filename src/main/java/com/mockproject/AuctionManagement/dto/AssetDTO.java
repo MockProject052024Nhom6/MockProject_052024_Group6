@@ -19,12 +19,12 @@ public class AssetDTO {
     private String size;
     private String origin;
     private String propertyStatus;
-    private String quantity;
+    private Integer quantity;
     private AssetStatus assetStatus;
     private Integer status;
     private List<MediaDTO> mediaList;
 
-    public AssetDTO(Long idAsset, String assetName, String description, String size, String origin, String propertyStatus, String quantity, AssetStatus assetStatus, Integer status) {
+    public AssetDTO(Long idAsset, String assetName, String description, String size, String origin, String propertyStatus, Integer quantity, AssetStatus assetStatus, Integer status) {
         this.idAsset = idAsset;
         this.assetName = assetName;
         this.description = description;
