@@ -1,17 +1,20 @@
 package com.mockproject.AuctionManagement.repository;
 
+import com.mockproject.AuctionManagement.dto.MediaDTO;
 import com.mockproject.AuctionManagement.entity.AssetMediaEntity;
 import com.mockproject.AuctionManagement.enums.TypeMedia;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Repository
-public interface AssetMediaRepository extends JpaRepository<AssetMediaEntity, Long> {
+public interface MediaRepository extends JpaRepository<AssetMediaEntity, Long> {
+
+    @Query("SELECT new com.mockproject.AuctionManagement.dto.MediaDTO(m.link, m.type, m.description) " +
+            "FROM AssetMediaEntity m WHERE m.idMedia = :assetId")
+    List<MediaDTO> findMediaByAssetId(@Param("assetId") Long assetId);
 
     @Query("""
             select m.link
