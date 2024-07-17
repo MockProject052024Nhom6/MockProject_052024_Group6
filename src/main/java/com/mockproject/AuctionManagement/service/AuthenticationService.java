@@ -7,9 +7,10 @@ import com.mockproject.AuctionManagement.dto.request.RegisterRequestDTO;
 import com.mockproject.AuctionManagement.dto.response.AuthenticationResponse;
 import com.mockproject.AuctionManagement.dto.response.IntrospectResponse;
 import com.mockproject.AuctionManagement.entity.InvalidatedToken;
-import com.mockproject.AuctionManagement.entity.UserEntity;
 import com.mockproject.AuctionManagement.entity.RoleEntity;
+import com.mockproject.AuctionManagement.entity.UserEntity;
 import com.mockproject.AuctionManagement.entity.UserHasRoleEntity;
+import com.mockproject.AuctionManagement.enums.UserRole;
 import com.mockproject.AuctionManagement.enums.UserStatus;
 import com.mockproject.AuctionManagement.exception.AppException;
 import com.mockproject.AuctionManagement.exception.ErrorCode;
@@ -38,7 +39,9 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -69,14 +72,18 @@ public class AuthenticationService {
     public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
         var token = request.getToken();
         boolean isValid = true;
-
+        Long userId = null;
         try {
-            verifyToken(token, false);
+            SignedJWT signedJWT = verifyToken(token, false);
+            userId = Long.parseLong(signedJWT.getJWTClaimsSet().getSubject());
         } catch (AppException e) {
             isValid = false;
         }
 
-        return IntrospectResponse.builder().valid(isValid).build();
+        return IntrospectResponse.builder()
+                .valid(isValid)
+                .userId(userId)
+                .build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -93,7 +100,7 @@ public class AuthenticationService {
         String refreshToken = generateRefreshToken(user);
 
         List<String> roleNames = user.getUserHasRoleEntities().stream()
-                .map(userHasRole -> userHasRole.getRoleEntity().getRoleName())
+                .map(userHasRole -> userHasRole.getRoleEntity().getRoleName().name())
                 .collect(Collectors.toList());
 
         return AuthenticationResponse.builder()
@@ -136,12 +143,13 @@ public class AuthenticationService {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
 
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .subject(user.getUsername())
-                .issuer("devteria.com")
+                .subject(String.valueOf(user.getIdUser()))
+                .issuer("mintrees.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(
                         Instant.now().plus(duration, ChronoUnit.SECONDS).toEpochMilli()
                 ))
+                .claim("authorities",user.getAuthorities())
                 .jwtID(UUID.randomUUID().toString())
                 .build();
 
@@ -193,7 +201,7 @@ public class AuthenticationService {
         }
 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
-        RoleEntity role = roleRepository.findByRoleName("User").orElseThrow(() -> new RuntimeException("Role not found"));
+        RoleEntity role = roleRepository.findByRoleName(UserRole.USER).orElseThrow(() -> new RuntimeException("Role not found"));
 
         UserEntity user = UserEntity.builder()
                 .firstName(request.getFirstName())
@@ -201,6 +209,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .userStatus(UserStatus.ACTIVE)
+                .username(request.getFirstName()+" "+request.getLastName())
                 .status(1)
                 .build();
 
@@ -219,7 +228,7 @@ public class AuthenticationService {
         String refreshToken = generateRefreshToken(user);
 
         List<String> roleNames = user.getUserHasRoleEntities().stream()
-                .map(userHasRole -> userHasRole.getRoleEntity().getRoleName())
+                .map(userHasRole -> userHasRole.getRoleEntity().getRoleName().name())
                 .collect(Collectors.toList());
 
         return AuthenticationResponse.builder()
