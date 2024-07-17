@@ -1,5 +1,6 @@
 package com.mockproject.AuctionManagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class CategoryAssetEntity extends AbstractEntity{
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "categoryAssetEntity")
+    @OneToMany(mappedBy = "categoryAssetEntity", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<AssetEntity> assetEntities = new HashSet<>();
 }

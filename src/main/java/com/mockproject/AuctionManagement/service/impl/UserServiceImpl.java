@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
             BeanUtils.copyProperties(userEntity, userDTO);
             Set<String> roles = userEntity.getUserHasRoleEntities()
                     .stream()
-                    .map(userHasRole -> userHasRole.getRoleEntity().getRoleName())
+                    .map(userHasRole -> userHasRole.getRoleEntity().getRoleName().name())
                     .collect(Collectors.toSet());
             userDTO.setRoles(roles);
             return Optional.of(userDTO);
@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
             BeanUtils.copyProperties(userEntity, userDTO);
             Set<String> roles = userEntity.getUserHasRoleEntities()
                     .stream()
-                    .map(userHasRole -> userHasRole.getRoleEntity().getRoleName())
+                    .map(userHasRole -> userHasRole.getRoleEntity().getRoleName().name())
                     .collect(Collectors.toSet());
             userDTO.setRoles(roles);
             return Optional.of(userDTO);
