@@ -3,7 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-/src/main/resources/auctionmanagement-firebase.json
+/src/main/resources/firebase.json
 
 
 ### STS ###

@@ -1,3 +1,9 @@
+CREATE DATABASE auction_management;
+GO
+
+USE auction_management;
+GO
+
 INSERT INTO tbl_warehouse(warehouse_name, asset_placement,address_warehouse,status)
 VALUES
     ('Main Warehouse', 'A1', '123 Main St, City A', 1),
