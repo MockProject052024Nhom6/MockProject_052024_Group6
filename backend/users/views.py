@@ -6,16 +6,23 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 from django.contrib.auth import authenticate, get_user_model
 from django.utils import timezone
-from .serializers import UserSerializer, SignUpSerializer, ChangePasswordSerializer
+from .serializers import (UserSerializer, SignUpSerializer, ChangePasswordSerializer, NotificationSerializer, UserNotificationSerializer,
+                          InformationAccountSerializer, TransactionHistorySerializer, AdminUserSerializer, StaffUserSerializer)
 from .permissions import IsAdminUser, IsStaffUser
+
+from .models import Notification, UserNotification, InformationAccount, TransactionHistory
 
 User = get_user_model()
 
-
 class UserDetailView(generics.RetrieveUpdateAPIView):
-    """User detail view for retrieving and updating authenticated user's information."""
-    serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):
+        if self.request.user.is_superuser:
+            return AdminUserSerializer
+        elif self.request.user.is_staff:
+            return StaffUserSerializer
+        return UserSerializer
 
     def get_object(self):
         return self.request.user
@@ -84,7 +91,8 @@ def logout(request):
 @permission_classes([IsAuthenticated])
 def change_password(request):
     """Change the authenticated user's password."""
-    serializer = ChangePasswordSerializer(data=request.data, context={'request': request})
+    serializer = ChangePasswordSerializer(
+        data=request.data, context={'request': request})
     serializer.is_valid(raise_exception=True)
     serializer.save()
     return Response({"message": "Password changed successfully"}, status=status.HTTP_200_OK)
@@ -104,20 +112,20 @@ class UserViewSet(viewsets.ModelViewSet):
     """ViewSet for managing user accounts."""
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    
+
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
             permission_classes = [IsStaffUser]
-        elif self.action in ['create', 'update', 'partial_update', 'destroy']:
-            permission_classes = [IsAdminUser]
         else:
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
 
     def get_queryset(self):
-        if self.request.user.role == User.ADMIN:
+        if self.request.user.is_superuser:
             return User.objects.all()
-        return User.objects.filter(is_active=True)
+        elif self.request.user.is_staff:
+            return User.objects.filter(is_active=True)
+        return User.objects.none()
 
     def perform_destroy(self, instance):
         instance.is_active = False
@@ -139,14 +147,62 @@ class UserViewSet(viewsets.ModelViewSet):
         user.save()
         return Response({"message": f"User {user.email} has been deactivated"})
 
-    def update(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', False)
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
 
-        if 'role' in serializer.validated_data and not request.user.role == User.ADMIN:
-            return Response({"message": "Only admin can change user role"}, status=status.HTTP_403_FORBIDDEN)
+class NotificationViewSet(viewsets.ModelViewSet):
+    queryset = Notification.objects.all()
+    serializer_class = NotificationSerializer
+    permission_classes = [IsAdminUser]
 
-        self.perform_update(serializer)
-        return Response(serializer.data)
+
+class UserNotificationViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = UserNotificationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return UserNotification.objects.filter(user=self.request.user)
+
+    @action(detail=True, methods=['post'])
+    def mark_as_read(self, request, pk=None):
+        notification = self.get_object()
+        notification.is_read = True
+        notification.read_date = timezone.now()
+        notification.save()
+        return Response({"message": "Notification marked as read"}, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['post'])
+    def mark_all_as_read(self, request):
+        UserNotification.objects.filter(user=request.user, is_read=False).update(
+            is_read=True, read_date=timezone.now())
+        return Response({"message": "All notifications marked as read"}, status=status.HTTP_200_OK)
+
+
+class InformationAccountViewSet(viewsets.ModelViewSet):
+    serializer_class = InformationAccountSerializer
+
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            permission_classes = [IsAuthenticated]
+        else:
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return InformationAccount.objects.all()
+        return InformationAccount.objects.filter(id_user=self.request.user)
+
+
+class TransactionHistoryViewSet(viewsets.ModelViewSet):
+    serializer_class = TransactionHistorySerializer
+
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            permission_classes = [IsAuthenticated]
+        else:
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return TransactionHistory.objects.all()
+        return TransactionHistory.objects.filter(id_user=self.request.user)

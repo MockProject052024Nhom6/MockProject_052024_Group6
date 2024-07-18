@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import User
+from .enums import PropertyStatus, AssetStatus, AppraiserStatus, AssetMediaType
 
 class CategoryAsset(models.Model):
     name = models.CharField(max_length=255)
@@ -15,7 +16,7 @@ class WareHouse(models.Model):
 class Appraiser(models.Model):
     experiences = models.TextField()
     specialized = models.CharField(max_length=255)
-    status_appraiser = models.CharField(max_length=50)
+    status_appraiser = models.CharField(max_length=50, choices=AppraiserStatus.choices, default=AppraiserStatus.ACTIVE)
     id_user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.BooleanField(default=True)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -27,9 +28,9 @@ class Asset(models.Model):
     status = models.BooleanField(default=True)
     size = models.CharField(max_length=100)
     origin = models.CharField(max_length=255)
-    property_status = models.CharField(max_length=50)
+    property_status = models.CharField(max_length=50, choices=PropertyStatus.choices, default=PropertyStatus.AVAILABLE)
     quantity = models.PositiveIntegerField()
-    status_asset = models.CharField(max_length=50)
+    status_asset = models.CharField(max_length=50, choices=AssetStatus.choices, default=AssetStatus.ACTIVE)
     id_user_winner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='won_assets')
     id_seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sold_assets')
     id_warehouse = models.ForeignKey(WareHouse, on_delete=models.SET_NULL, null=True)
@@ -41,7 +42,7 @@ class Asset(models.Model):
 class AssetMedia(models.Model):
     id_asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
     link = models.URLField()
-    type = models.CharField(max_length=50)
+    type = models.CharField(max_length=50, choices=AssetMediaType.choices)
     description = models.TextField()
     status = models.BooleanField(default=True)
     created_date = models.DateTimeField(auto_now_add=True)

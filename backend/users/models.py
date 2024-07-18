@@ -81,7 +81,6 @@ class User(AbstractUser):
 class Notification(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
-    status = models.BooleanField(default=True)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
 
@@ -116,7 +115,6 @@ class InformationAccount(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     city_account = models.CharField(max_length=100)
-    status = models.IntegerField()
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
 
@@ -136,7 +134,6 @@ class TransactionHistory(models.Model):
     status_transaction = models.CharField(max_length=50)
     note = models.TextField(blank=True)
     day_trading = models.DateField()
-    status = models.BooleanField(default=True)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
 
