@@ -35,7 +35,7 @@ public class MediaService {
         BlobId blobId = BlobId.of(bucketName, "medias/" + fileName);
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("media").build();
 
-        InputStream inputStream = MediaService.class.getClassLoader().getResourceAsStream("auctionmanagement-firebase.json");
+        InputStream inputStream = MediaService.class.getClassLoader().getResourceAsStream("firebase.json");
         Credentials credentials = GoogleCredentials.fromStream(inputStream);
 
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();

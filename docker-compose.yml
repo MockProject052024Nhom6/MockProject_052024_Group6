@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  db:
+    container_name: db
+    image: mcr.microsoft.com/mssql/server:latest
+    restart: always
+    ports:
+      - "1444:1433"
+    environment:
+      SA_PASSWORD: 12345678Aa!
+      ACCEPT_EULA: Y
+    volumes:
+      - ./init-db.sql:/init-db.sql
+    networks:
+      - my_network
+    command: /bin/bash -c "/opt/mssql/bin/sqlservr & sleep 30s & /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 12345678Aa! -Q 'IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = \"auction_management\") CREATE DATABASE auction_management;' && wait"
+
+  api-service:
+    container_name: api-service
+    image: foxfessor/api-service:1.0
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      spring.datasource.url: jdbc:sqlserver://db:1433;databaseName=auction_management;encrypt=true;trustServerCertificate=true
+    networks:
+      - my_network
+    depends_on:
+      - db
+
+networks:
+  my_network:
+    driver: bridge

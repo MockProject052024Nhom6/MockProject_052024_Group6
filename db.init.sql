@@ -1,5 +1,8 @@
-create database auction_management
-use auction_management
+CREATE DATABASE auction_management;
+GO
+
+USE auction_management;
+GO
 
 INSERT INTO tbl_warehouse(warehouse_name, asset_placement,address_warehouse,status)
 VALUES
