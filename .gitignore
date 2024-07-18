@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 !**/src/main/resources/auctionmanagement-firebase.json
 
+
 ### STS ###
 .apt_generated
 .classpath
