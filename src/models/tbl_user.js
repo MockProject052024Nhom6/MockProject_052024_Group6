@@ -101,6 +101,10 @@ export default class tbl_user extends Model {
     modified_by: {
       type: DataTypes.STRING(255),
       allowNull: true
+    },
+    refresh_token:{
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   }, {
     sequelize,

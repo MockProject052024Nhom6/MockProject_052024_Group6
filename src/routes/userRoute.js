@@ -1,8 +1,7 @@
 import express from "express";
-import {} from ""
+import {getProfile, updateProfile} from "../controllers/userController.js";
 const userRoute = express.Router();
 
-userRoute.get();
-userRoute.put();
-userRoute.post();
+userRoute.get("/:id", getProfile);
+userRoute.put("/:id", updateProfile);
 export default userRoute;
