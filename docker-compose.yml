@@ -1,33 +1,32 @@
 version: "3.9"
 
 services:
-  db:
-    container_name: db
+  mssql-server:
+    container_name: sql-server
     image: mcr.microsoft.com/mssql/server:latest
     restart: always
+    env_file: .env
     ports:
-      - "1444:1433"
+      - "${SQLSERVER_LOCAL_PORT}:${SQLSERVER_DOCKER_PORT}"
     environment:
-      SA_PASSWORD: 12345678Aa!
+      SA_PASSWORD: ${SQLSERVER_SA_PASSWORD}
       ACCEPT_EULA: Y
-    volumes:
-      - ./init-db.sql:/init-db.sql
     networks:
       - my_network
-    command: /bin/bash -c "/opt/mssql/bin/sqlservr & sleep 30s & /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 12345678Aa! -Q 'IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = \"auction_management\") CREATE DATABASE auction_management;' && wait"
+    command: /bin/bash -c "/opt/mssql/bin/sqlservr & sleep 30s & /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $SQLSERVER_SA_PASSWORD -Q 'IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = \"$SQLSERVER_DATABASE\") CREATE DATABASE $SQLSERVER_DATABASE;' && wait"
 
   api-service:
     container_name: api-service
     image: foxfessor/api-service:1.0
     restart: always
     ports:
-      - "8080:8080"
+      - "${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}"
     environment:
-      spring.datasource.url: jdbc:sqlserver://db:1433;databaseName=auction_management;encrypt=true;trustServerCertificate=true
+      spring.datasource.url: jdbc:sqlserver://mssql-server:$SQLSERVER_DOCKER_PORT;databaseName=$SQLSERVER_DATABASE;encrypt=true;trustServerCertificate=true
     networks:
       - my_network
     depends_on:
-      - db
+      - mssql-server
 
 networks:
   my_network:
