@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: >
+      sh -c "
+      python manage.py makemigrations &&
+      python manage.py migrate &&
+      (python manage.py createsuperuser --noinput || true) &&
+      python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      - DJANGO_SUPERUSER_EMAIL=${ADMIN_EMAIL}
+      - DJANGO_SUPERUSER_PASSWORD=${ADMIN_PASSWORD}
+
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  mysql_data:

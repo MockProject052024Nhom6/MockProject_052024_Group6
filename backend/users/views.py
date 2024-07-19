@@ -14,6 +14,7 @@ from .models import Notification, UserNotification, InformationAccount, Transact
 
 User = get_user_model()
 
+
 class UserDetailView(generics.RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
 
@@ -121,9 +122,12 @@ class UserViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
     def get_queryset(self):
-        if self.request.user.is_superuser:
+        user = self.request.user
+        if not user.is_authenticated:
+            return User.objects.none()
+        if user.is_superuser:
             return User.objects.all()
-        elif self.request.user.is_staff:
+        elif user.is_staff:
             return User.objects.filter(is_active=True)
         return User.objects.none()
 
@@ -159,7 +163,9 @@ class UserNotificationViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return UserNotification.objects.filter(user=self.request.user)
+        if self.request.user.is_authenticated:
+            return UserNotification.objects.filter(user=self.request.user)
+        return UserNotification.objects.none()
 
     @action(detail=True, methods=['post'])
     def mark_as_read(self, request, pk=None):
@@ -171,8 +177,7 @@ class UserNotificationViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=['post'])
     def mark_all_as_read(self, request):
-        UserNotification.objects.filter(user=request.user, is_read=False).update(
-            is_read=True, read_date=timezone.now())
+        UserNotification.objects.filter(user=request.user, is_read=False).update(is_read=True, read_date=timezone.now())
         return Response({"message": "All notifications marked as read"}, status=status.HTTP_200_OK)
 
 
@@ -187,9 +192,11 @@ class InformationAccountViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
     def get_queryset(self):
-        if self.request.user.is_staff:
-            return InformationAccount.objects.all()
-        return InformationAccount.objects.filter(id_user=self.request.user)
+        if self.request.user.is_authenticated:
+            if self.request.user.is_staff:
+                return InformationAccount.objects.all()
+            return InformationAccount.objects.filter(id_user=self.request.user)
+        return InformationAccount.objects.none()
 
 
 class TransactionHistoryViewSet(viewsets.ModelViewSet):
@@ -203,6 +210,8 @@ class TransactionHistoryViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
     def get_queryset(self):
-        if self.request.user.is_staff:
-            return TransactionHistory.objects.all()
-        return TransactionHistory.objects.filter(id_user=self.request.user)
+        if self.request.user.is_authenticated:
+            if self.request.user.is_staff:
+                return TransactionHistory.objects.all()
+            return TransactionHistory.objects.filter(id_user=self.request.user)
+        return TransactionHistory.objects.none()
