@@ -21,6 +21,6 @@ urlpatterns = [
     path('signup/', signup, name='signup'),
     path('users/me/', UserDetailView.as_view(), name='user-detail'),
     path('change-password/', change_password, name='change-password'),
-    path('user/deactivate/', deactivate, name='user-deactivate'),
+    path('users/me/deactivate/', deactivate, name='user-deactivate'),
     path('', include(router.urls)),
 ]
