@@ -11,23 +11,50 @@ services:
     environment:
       SA_PASSWORD: ${SQLSERVER_SA_PASSWORD}
       ACCEPT_EULA: Y
+    volumes:
+      - sqlserver-data:/var/opt/mssql
     networks:
-      - my_network
-    command: /bin/bash -c "/opt/mssql/bin/sqlservr & sleep 30s & /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $SQLSERVER_SA_PASSWORD -Q 'IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = \"$SQLSERVER_DATABASE\") CREATE DATABASE $SQLSERVER_DATABASE;' && wait"
+      - auction
+    command: >
+      /bin/bash -c "
+      /opt/mssql/bin/sqlservr &
+      sleep 15;
+      echo 'Waiting for SQL Server to be ready...';
+      until /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 12345678Aa! -Q 'SELECT 1'; do
+        >&2 echo 'SQL Server is starting up';
+        sleep 1;
+      done;
+      echo 'SQL Server is up - executing init script';
+      /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 12345678Aa! -Q 'IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = \"auction_management\") CREATE DATABASE auction_management;';
+      /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 12345678Aa! -d auction_management -i /init-db.sql;
+      wait
+      "
 
   api-service:
-    container_name: api-service
-    image: foxfessor/api-service:1.0
+    container_name: api-service-spring
+    env_file: .env
     restart: always
+    image: phhtruc/auctionmanagement-api-service:latest
     ports:
       - "${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}"
     environment:
-      spring.datasource.url: jdbc:sqlserver://mssql-server:$SQLSERVER_DOCKER_PORT;databaseName=$SQLSERVER_DATABASE;encrypt=true;trustServerCertificate=true
+      SPRING_APPLICATION_JSON: '{
+                   "spring.datasource.url"  : "jdbc:sqlserver://mssql-server:${SQLSERVER_DOCKER_PORT};databaseName=${SQLSERVER_DATABASE};encrypt=true;trustServerCertificate=true",
+                   "spring.datasource.username" : "sa",
+                   "spring.datasource.password" : "${SQLSERVER_SA_PASSWORD}",
+                   "spring.jpa.hibernate.ddl-auto" : "update",
+                   "hibernate.dialect" : "org.hibernate.dialect.SQLServerDialect"
+                 }'
+    volumes:
+      - .m2:/root/.m2
     networks:
-      - my_network
+      - auction
     depends_on:
       - mssql-server
 
+volumes:
+  sqlserver-data:
+
 networks:
-  my_network:
+  auction:
     driver: bridge
