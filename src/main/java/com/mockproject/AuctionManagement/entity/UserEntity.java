@@ -1,6 +1,10 @@
 package com.mockproject.AuctionManagement.entity;
 
+
 import com.fasterxml.jackson.annotation.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.mockproject.AuctionManagement.enums.UserStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -19,6 +23,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+
 @Table(name = "`tbl_user`")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUser")
 public class UserEntity extends AbstractEntity {
@@ -93,24 +98,30 @@ public class UserEntity extends AbstractEntity {
     private Integer status;
 
     @OneToMany(mappedBy = "userEntity", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<UserHasRoleEntity> userHasRoleEntities = new HashSet<>();
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<InformationAccountEntity> informationAccountEntities = new HashSet<>();
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<UserHasNotificationEntity> userHasNotificationEntities = new HashSet<>();
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<TransactionHistoryEntity> transactionHistoryEntities = new HashSet<>();
 
     @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<UserHasAuctionEntity> userHasAuctionEntities = new HashSet<>();
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<ContractEntity> contractEntities = new HashSet<>();
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<BidEntity> bidEntities = new HashSet<>();
 }
