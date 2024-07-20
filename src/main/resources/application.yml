@@ -6,7 +6,6 @@ spring:
     url: jdbc:sqlserver://localhost:1433;databaseName=auction_management;encrypt=true;trustServerCertificate=true
     username: sa
     password: 12345678
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -14,7 +13,10 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
-    open-in-view: false
+    open-in-view: true
+  mvc:
+    converters:
+      preferred-json-mapper: jackson
 jwt:
   signerKey: "1TjXchw5FloESb63Kc+DFhTARvpWL4jUGCwfGWxuG5SIf/1y/LgJxHnMqaF6A/ij"
   valid-duration: 3600 # in second

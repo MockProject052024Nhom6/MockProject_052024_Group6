@@ -1,5 +1,6 @@
 package com.mockproject.AuctionManagement.entity;
 
+import com.fasterxml.jackson.annotation.*;
 import com.mockproject.AuctionManagement.enums.UserStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -19,6 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "`tbl_user`")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUser")
 public class UserEntity extends AbstractEntity {
 
     @Id
@@ -102,7 +104,8 @@ public class UserEntity extends AbstractEntity {
     @OneToMany(mappedBy = "userEntity")
     private Set<TransactionHistoryEntity> transactionHistoryEntities = new HashSet<>();
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<UserHasAuctionEntity> userHasAuctionEntities = new HashSet<>();
 
     @OneToMany(mappedBy = "userEntity")

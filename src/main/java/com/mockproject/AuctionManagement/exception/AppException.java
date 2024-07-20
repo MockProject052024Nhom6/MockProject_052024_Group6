@@ -1,5 +1,7 @@
 package com.mockproject.AuctionManagement.exception;
 
+import org.springframework.http.HttpStatus;
+
 public class AppException extends RuntimeException {
 
     public AppException(ErrorCode errorCode) {
@@ -8,6 +10,7 @@ public class AppException extends RuntimeException {
     }
 
     private ErrorCode errorCode;
+
 
     public ErrorCode getErrorCode() {
         return errorCode;
