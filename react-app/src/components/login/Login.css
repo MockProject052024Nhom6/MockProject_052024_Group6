@@ -1,0 +1,95 @@
+.login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+    width: 100%;
+    background-color: #0000FF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .header-image {
+    background-size: cover;
+    width: 100px;
+    height: 50px;
+  }
+  
+  .header-contact {
+    color: white;
+    font-size: 16px;
+  }
+  
+  .login-container {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-top: 20px;
+    width: 300px;
+    text-align: center;
+  }
+  
+  .login-container h2 {
+    font-size: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 14px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+  }
+  
+  .form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .remember-me {
+    display: flex;
+    align-items: center;
+  }
+  
+  .forgot-password a {
+    font-size: 14px;
+    color: blue;
+  }
+  
+  .login-button {
+    width: 100%;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .signup-link a {
+    font-size: 14px;
+    color: blue;
+  }
+
+  .error-message {
+    color: red;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
