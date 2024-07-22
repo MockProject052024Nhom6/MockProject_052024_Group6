@@ -1,6 +1,17 @@
 package com.mockproject.AuctionManagement.controller;
 
 import com.mockproject.AuctionManagement.dto.request.AuthenticationRequest;
+
+import com.mockproject.AuctionManagement.dto.request.IntrospectRequest;
+import com.mockproject.AuctionManagement.dto.request.LogoutRequest;
+import com.mockproject.AuctionManagement.dto.response.ApiResponse;
+import com.mockproject.AuctionManagement.dto.response.AuthenticationResponse;
+import com.mockproject.AuctionManagement.dto.response.IntrospectResponse;
+import java.text.ParseException;
+import com.mockproject.AuctionManagement.service.AuthenticationService;
+import com.mockproject.AuctionManagement.service.TokenService;
+import com.nimbusds.jose.JOSEException;
+
 import com.mockproject.AuctionManagement.dto.request.RegisterRequestDTO;
 import com.mockproject.AuctionManagement.dto.response.ApiResponse;
 import com.mockproject.AuctionManagement.dto.response.AuthenticationResponse;
@@ -10,6 +21,7 @@ import com.mockproject.AuctionManagement.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -20,12 +32,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Tag(name = "Authentication", description = "Authentication API")
 public class AuthenticationController {
-
+    TokenService tokenService;
+  
     AuthenticationService authenticationService;
 
     @Operation(
@@ -38,6 +51,23 @@ public class AuthenticationController {
         return ApiResponse.<AuthenticationResponse>builder().result(result).build();
     }
 
+    @PostMapping("/introspect")
+    ApiResponse<IntrospectResponse> authenticate(@RequestBody IntrospectRequest request)
+            throws ParseException, JOSEException {
+        var result = authenticationService.introspect(request);
+        return ApiResponse.<IntrospectResponse>builder().result(result).build();
+    }
+    @PostMapping("/token")
+    Long responseToken(@RequestBody String token) throws ParseException, JOSEException {
+        return tokenService.getUserIdFromToken(token);
+    }
+
+    @PostMapping("/logout")
+    public ApiResponse<Void> logout(@RequestBody LogoutRequest request) throws ParseException, JOSEException {
+        authenticationService.logout(request);
+        return ApiResponse.<Void>builder().build();
+    }
+  
     @Operation(
             summary = "register",
             description = "register new user"
@@ -50,5 +80,4 @@ public class AuthenticationController {
             return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
         }
     }
-
 }

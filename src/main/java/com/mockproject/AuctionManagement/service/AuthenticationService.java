@@ -2,6 +2,7 @@ package com.mockproject.AuctionManagement.service;
 
 import com.mockproject.AuctionManagement.dto.request.AuthenticationRequest;
 import com.mockproject.AuctionManagement.dto.request.IntrospectRequest;
+import com.mockproject.AuctionManagement.dto.request.LogoutRequest;
 import com.mockproject.AuctionManagement.dto.request.RefreshRequest;
 import com.mockproject.AuctionManagement.dto.request.RegisterRequestDTO;
 import com.mockproject.AuctionManagement.dto.response.AuthenticationResponse;
@@ -31,16 +32,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.boot.model.source.spi.CollectionIdSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -49,9 +53,11 @@ import java.util.stream.Collectors;
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationService {
+    TokenService tokenService;
 
     @PersistenceContext
     private EntityManager entityManager;
+  
     UserRepository userRepository;
     InvalidatedTokenRepository invalidatedTokenRepository;
     RoleRepository roleRepository;
@@ -86,6 +92,17 @@ public class AuthenticationService {
                 .build();
     }
 
+    public void logout(LogoutRequest request) throws ParseException, JOSEException {
+        try {
+            var signToken = verifyToken(request.getToken(), true);
+            String jit = signToken.getJWTClaimsSet().getJWTID();
+            Date expiryTime = signToken.getJWTClaimsSet().getExpirationTime();
+            InvalidatedToken invalidatedToken = InvalidatedToken.builder().id(jit).expiryTime(expiryTime).build();
+            invalidatedTokenRepository.save(invalidatedToken);
+        } catch (AppException exception){
+            log.info("Token already expired");
+        }
+    }
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         var user = userRepository
@@ -149,7 +166,7 @@ public class AuthenticationService {
                 .expirationTime(new Date(
                         Instant.now().plus(duration, ChronoUnit.SECONDS).toEpochMilli()
                 ))
-                .claim("authorities",user.getAuthorities())
+                .claim("scope",buildScope(user))
                 .jwtID(UUID.randomUUID().toString())
                 .build();
 
@@ -193,6 +210,11 @@ public class AuthenticationService {
 
         return signedJWT;
     }
+
+    private String buildScope(UserEntity user) {
+        return user.getUserHasRoleEntities().stream()
+                .map(userHasRoleEntity -> userHasRoleEntity.getRoleEntity().getRoleName())
+                .collect(Collectors.joining(" "));
 
     @Transactional
     public AuthenticationResponse register(RegisterRequestDTO request) {

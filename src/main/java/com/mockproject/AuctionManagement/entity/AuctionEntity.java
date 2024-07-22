@@ -1,5 +1,8 @@
 package com.mockproject.AuctionManagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mockproject.AuctionManagement.enums.AuctionStatus;
 import com.mockproject.AuctionManagement.enums.TypeAuction;
 import jakarta.persistence.*;
@@ -18,7 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "tbl_auction")
-public class AuctionEntity extends AbstractEntity{
+public class AuctionEntity extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,14 +54,15 @@ public class AuctionEntity extends AbstractEntity{
     @Column(name = "status")
     private Integer status;
 
-    @OneToMany(mappedBy = "auctionEntity")
+    @OneToMany(mappedBy = "auctionEntity", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<UserHasAuctionEntity> userHasAuctionEntities = new HashSet<>();
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_auctioneer")
     private UserEntity userEntity;
 
-    @OneToMany(mappedBy = "auctionEntity")
+    @OneToMany(mappedBy = "auctionEntity", fetch = FetchType.EAGER)
     private Set<AuctionHasAssetEntity> auctionHasAssetEntities = new HashSet<>();
 
     @ManyToOne()

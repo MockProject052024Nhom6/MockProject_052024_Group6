@@ -1,5 +1,8 @@
 package com.mockproject.AuctionManagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mockproject.AuctionManagement.enums.UserHasAuctionStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,6 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "tbl_user_has_auction")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class UserHasAuctionEntity extends AbstractEntity{
 
     @Id
@@ -30,16 +34,16 @@ public class UserHasAuctionEntity extends AbstractEntity{
 
     @Column(name = "user_has_auction_status")
     @Enumerated(EnumType.STRING)
-    private UserHasAuctionStatus userHasAcutionStatus;
+    private UserHasAuctionStatus userHasAuctionStatus;
 
     @Column(name = "status")
     private Integer status;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_auction")
     private AuctionEntity auctionEntity;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_user")
     private UserEntity userEntity;
 }

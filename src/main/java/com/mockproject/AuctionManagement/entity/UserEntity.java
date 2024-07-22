@@ -1,6 +1,10 @@
 package com.mockproject.AuctionManagement.entity;
 
+
+import com.fasterxml.jackson.annotation.*;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.mockproject.AuctionManagement.enums.UserStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -20,6 +24,7 @@ import java.util.stream.Collectors;
 @Builder
 @Entity
 @Table(name = "tbl_user")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idUser")
 public class UserEntity extends AbstractEntity implements UserDetails{
 
     @Id
