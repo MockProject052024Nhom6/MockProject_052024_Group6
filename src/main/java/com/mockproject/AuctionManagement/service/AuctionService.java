@@ -5,6 +5,7 @@ import com.mockproject.AuctionManagement.dto.request.AuctionRegisterRequest;
 import com.mockproject.AuctionManagement.dto.request.AuctionRequestCreate;
 import com.mockproject.AuctionManagement.dto.request.AuctionRequestUpdate;
 import com.mockproject.AuctionManagement.dto.request.IntrospectRequest;
+import com.mockproject.AuctionManagement.dto.response.AuctionDeleteResponse;
 import com.mockproject.AuctionManagement.dto.response.AuctionRegisterResponse;
 import com.mockproject.AuctionManagement.dto.response.AuctionResponse;
 import com.mockproject.AuctionManagement.entity.AuctionEntity;
@@ -74,7 +75,7 @@ public class AuctionService {
     }
 
     @Transactional
-    public AuctionResponse AuctionDelete(Long idAuction, IntrospectRequest token) throws ParseException, JOSEException {
+    public AuctionDeleteResponse AuctionDelete(Long idAuction, IntrospectRequest token) throws ParseException, JOSEException {
         Long idUser = authenticationService.introspect(token).getUserId();
         UserEntity userEntity = userRepository.findById(idUser)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_EXISTED));
@@ -82,10 +83,10 @@ public class AuctionService {
                 .orElseThrow(() -> new AppException(ErrorCode.AUCTION_NOT_FOUND));
 
         auctionRepository.delete(auction);
-        AuctionResponse response = new AuctionResponse();
+        AuctionDeleteResponse response = new AuctionDeleteResponse();
         response.setIdAuction(idAuction);
         response.setStatus(0);
-        response.setAddress("Auction deleted successfully");
+        response.setMessage("Auction deleted successfully");
 
         return response;
     }

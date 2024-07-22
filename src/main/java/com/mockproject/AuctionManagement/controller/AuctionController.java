@@ -6,6 +6,7 @@ import com.mockproject.AuctionManagement.dto.request.AuctionRequestCreate;
 import com.mockproject.AuctionManagement.dto.request.AuctionRequestUpdate;
 import com.mockproject.AuctionManagement.dto.request.IntrospectRequest;
 import com.mockproject.AuctionManagement.dto.response.ApiResponse;
+import com.mockproject.AuctionManagement.dto.response.AuctionDeleteResponse;
 import com.mockproject.AuctionManagement.dto.response.AuctionRegisterResponse;
 import com.mockproject.AuctionManagement.dto.response.AuctionResponse;
 import com.mockproject.AuctionManagement.entity.AuctionEntity;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 
 @RestController
-@RequestMapping("user/auction")
+@RequestMapping("/api/v1/auctions")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuctionController {
@@ -65,6 +66,16 @@ public class AuctionController {
         introspectRequest.setToken(token);
         AuctionResponse result = auctionService.AuctionUpdate(auctionId, request, introspectRequest);
         return ApiResponse.<AuctionResponse>builder().result(result).build();
+    }
+
+    @DeleteMapping("/{auctionId}")
+    public ApiResponse<AuctionDeleteResponse> auctionDelete (@PathVariable Long auctionId, @RequestHeader(name = HttpHeaders.AUTHORIZATION) String authorizationHeader ) throws ParseException, JOSEException {
+        String token = authorizationHeader.substring("Bearer ".length());
+        IntrospectRequest introspectRequest = new IntrospectRequest();
+        introspectRequest.setToken(token);
+        AuctionDeleteResponse result = auctionService.AuctionDelete(auctionId, introspectRequest);
+        return ApiResponse.<AuctionDeleteResponse>builder().result(result).build();
+
     }
 
     @GetMapping()

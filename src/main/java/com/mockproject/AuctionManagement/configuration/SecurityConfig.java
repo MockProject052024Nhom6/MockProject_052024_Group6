@@ -23,9 +23,8 @@ import org.springframework.web.filter.CorsFilter;
 @EnableMethodSecurity
 public class SecurityConfig {
     private final String[] PUBLIC_ENDPOINTS = {
-           "user/auction","/user/login", "/auth/introspect", "/auth/logout", "/auth/refresh",
+           "user/auction","/user/login", "/auth/introspect", "/auth/login","/auth/logout", "/auth/refresh",
     };
-
 
     @Autowired
     private CustomJwtDecoder customJwtDecoder;
@@ -35,12 +34,9 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(request ->
                 request
                         .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS) .permitAll()
-                        .requestMatchers(HttpMethod.POST, "/user/**")
+                        .requestMatchers(HttpMethod.POST, "/auction/**")
                         .hasRole("User")
-                        .requestMatchers(HttpMethod.POST, "/admin/**")
-                        .hasRole("Admin")
-                        .requestMatchers(HttpMethod.GET, "/admin/**")
-                        .hasRole("Admin")
+                        .requestMatchers(HttpMethod.DELETE, "/auction/**").hasRole("User")
                 .anyRequest()
                 .authenticated());
 
