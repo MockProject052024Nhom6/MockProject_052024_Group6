@@ -71,7 +71,8 @@ class AppraiserViewSet(viewsets.ModelViewSet):
         if self.action in ["list", "retrieve"]:
             permission_classes = [permissions.IsAuthenticated]
         elif self.action in ["create", "update", "partial_update", "destroy"]:
-            permission_classes = [IsAdminUser]  # Only admin can manage appraisers
+            # Only admin can manage appraisers
+            permission_classes = [IsAdminUser]
         else:
             permission_classes = [permissions.IsAuthenticated]
         return [permission() for permission in permission_classes]
@@ -82,56 +83,29 @@ class AssetViewSet(viewsets.ModelViewSet):
 
     queryset = Asset.objects.all()
     serializer_class = AssetSerializer
-
+    
     def get_permissions(self):
         if self.action in ["list", "retrieve"]:
             permission_classes = [permissions.IsAuthenticated]
-        elif self.action in ["create"]:
-            permission_classes = [
-                permissions.IsAuthenticated
-            ]  # Any authenticated user can create assets
-        elif self.action in ["update", "partial_update", "destroy"]:
-            permission_classes = [
-                IsStaffUser
-            ]  # Only staff or admin can modify or delete assets
+        elif self.action in ["create", "update", "partial_update", "destroy"]:
+            permission_classes = [permissions.IsAuthenticated, IsAdminUser]
         else:
             permission_classes = [permissions.IsAuthenticated]
         return [permission() for permission in permission_classes]
 
-    @action(
-        detail=True, methods=["post"], permission_classes=[permissions.IsAuthenticated]
-    )
+    def perform_create(self, serializer):
+        serializer.save(id_seller=self.request.user)
+        
+    @action(detail=True, methods=["post"], url_path='add-media', permission_classes=[permissions.IsAuthenticated])
     def add_media(self, request, pk=None):
         """Add media to an asset."""
         asset = self.get_object()
-        if asset.id_seller != request.user:
-            return Response(
-                {"detail": "You do not have permission to add media to this asset."},
-                status=403,
-            )
         serializer = AssetMediaSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(id_asset=asset)
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
-
-
-class AssetMediaViewSet(viewsets.ModelViewSet):
-    """ViewSet for managing asset media."""
-
-    queryset = AssetMedia.objects.all()
-    serializer_class = AssetMediaSerializer
-
-    def get_permissions(self):
-        if self.action in ["list", "retrieve"]:
-            permission_classes = [permissions.IsAuthenticated]
-        elif self.action in ["create", "update", "partial_update", "destroy"]:
-            permission_classes = [
-                IsStaffUser
-            ]  # Only staff or admin can modify or delete asset media
-        else:
-            permission_classes = [permissions.IsAuthenticated]
-        return [permission() for permission in permission_classes]
+    
 
 
 class InventoryTransactionViewSet(viewsets.ModelViewSet):

@@ -15,8 +15,3 @@ class AppraiserStatus(models.TextChoices):
     ACTIVE = 'active', 'Active'
     INACTIVE = 'inactive', 'Inactive'
     SUSPENDED = 'suspended', 'Suspended'
-
-class AssetMediaType(models.TextChoices):
-    IMAGE = 'image', 'Image'
-    VIDEO = 'video', 'Video'
-    DOCUMENT = 'document', 'Document'
