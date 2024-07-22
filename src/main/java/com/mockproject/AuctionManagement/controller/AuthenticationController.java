@@ -1,27 +1,16 @@
 package com.mockproject.AuctionManagement.controller;
 
 import com.mockproject.AuctionManagement.dto.request.AuthenticationRequest;
-
 import com.mockproject.AuctionManagement.dto.request.IntrospectRequest;
 import com.mockproject.AuctionManagement.dto.request.LogoutRequest;
-import com.mockproject.AuctionManagement.dto.response.ApiResponse;
-import com.mockproject.AuctionManagement.dto.response.AuthenticationResponse;
-import com.mockproject.AuctionManagement.dto.response.IntrospectResponse;
-import java.text.ParseException;
+import com.mockproject.AuctionManagement.dto.request.RegisterRequestDTO;
+import com.mockproject.AuctionManagement.dto.response.*;
 import com.mockproject.AuctionManagement.service.AuthenticationService;
 import com.mockproject.AuctionManagement.service.TokenService;
 import com.nimbusds.jose.JOSEException;
-
-import com.mockproject.AuctionManagement.dto.request.RegisterRequestDTO;
-import com.mockproject.AuctionManagement.dto.response.ApiResponse;
-import com.mockproject.AuctionManagement.dto.response.AuthenticationResponse;
-import com.mockproject.AuctionManagement.dto.response.ResponseData;
-import com.mockproject.AuctionManagement.dto.response.ResponseError;
-import com.mockproject.AuctionManagement.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -30,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.text.ParseException;
 
 @RestController
 @RequestMapping("/user")
@@ -47,8 +38,8 @@ public class AuthenticationController {
     )
     @PostMapping("/login")
     ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
-        var result = authenticationService.authenticate(request);
-        return ApiResponse.<AuthenticationResponse>builder().result(result).build();
+            var result = authenticationService.authenticate(request);
+            return ApiResponse.<AuthenticationResponse>builder().result(result).build();
     }
 
     @PostMapping("/introspect")

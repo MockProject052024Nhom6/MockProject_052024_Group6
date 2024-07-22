@@ -213,8 +213,9 @@ public class AuthenticationService {
 
     private String buildScope(UserEntity user) {
         return user.getUserHasRoleEntities().stream()
-                .map(userHasRoleEntity -> userHasRoleEntity.getRoleEntity().getRoleName())
+                .map(userHasRoleEntity -> userHasRoleEntity.getRoleEntity().getRoleName().name())
                 .collect(Collectors.joining(" "));
+    }
 
     @Transactional
     public AuthenticationResponse register(RegisterRequestDTO request) {
