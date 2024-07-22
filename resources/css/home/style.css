@@ -36,6 +36,22 @@ body {
     background-color: var(--color-background-dd);
 }
 
+
+body::-webkit-scrollbar{
+    width: 5px;
+    height: 10px;
+    background-color: #f5f5f5;
+
+}
+body::-webkit-scrollbar-thumb {
+    background-color: var(--color-hover-button);
+    border-radius: 6px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-primary);
+}
+
 section{
     width: 100%;
     height: auto;

@@ -72,6 +72,11 @@
     #hero .form-select{
         border-radius: 10px;
         position: relative;
+       color: transparent;
+    }
+
+    #hero .form-select option{
+        color: black;
     }
 
 }
@@ -147,7 +152,8 @@
         font-size: x-small;
     }
 }
-@media only screen and (max-width: 480px){
+@media only screen and (max-width: 580px){
+
 
     #footer .custom-footer-bot,#footer .custom-footer-top{
        display: none;
