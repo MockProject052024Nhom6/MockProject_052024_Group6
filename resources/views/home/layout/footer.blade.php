@@ -54,7 +54,7 @@
                         <li class="list-inline-item"><a href="#">Manage Cookies</a></li>
                     </ul>
                 </div>
-                <div class="col-3 text-right">
+                <div class="col-3 text-right cmb-lang">
                     <span class="mx-auto me-1">
                         <i class="bi bi-globe"></i>
                     </span>
@@ -73,6 +73,15 @@
             </div>
         </div>
         
+
+        <div  class="footer-480">
+            <ul class="list-unstyled list-inline">
+                <li class="list-inline-item"><a href="#">Site Map</a></li>
+                <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+                <li class="list-inline-item"><a href="#">User Agreement</a></li>
+                <li class="list-inline-item"><a href="#">Manage Cookies</a></li>
+            </ul>
+        </div>
     </div>
 </footer>
 </section>

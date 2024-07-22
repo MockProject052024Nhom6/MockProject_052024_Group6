@@ -17,7 +17,7 @@
 
 
               {{-- Check the condition according to the login flag --}}
-              @if(false)
+              @if(true)
 
                 <div class="customLogin">
                   <a id="nar-contact-us" class="nav-link" href="#">Contact us</a>

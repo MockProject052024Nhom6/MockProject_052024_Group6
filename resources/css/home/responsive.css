@@ -6,7 +6,6 @@
 #card .container,
 #footer footer
 {
-    min-width: 480px;
     max-width: 1250px;
 }
 
@@ -57,6 +56,28 @@
    }
     
 }
+@media only screen and (max-width: 480px){
+
+    #hero .input-group.left .input-group-text{
+        width: 5%;
+        background: none;
+        border: none;
+        position: absolute;
+        top: 50%;
+        left: 15%;
+        transform: translate(-50%,-50%);
+        z-index: 999;
+    }
+
+    #hero .form-select{
+        border-radius: 10px;
+        position: relative;
+    }
+
+}
+
+
+
 
 /*------------------------------------- media card -----------------------------*/
 
@@ -100,6 +121,12 @@
     }
 }
 
+@media only screen and (max-width: 480px){
+    .custom-list-inline,.custom-card-text{
+        display: none;
+    }
+}
+
 /*---------------------------------- media footer ------------------------*/
 
 @media only screen and (max-width: 768px)
@@ -119,4 +146,22 @@
     #footer .custom-footer-bot .row ul li{
         font-size: x-small;
     }
+}
+@media only screen and (max-width: 480px){
+
+    #footer .custom-footer-bot,#footer .custom-footer-top{
+       display: none;
+    }
+
+    #footer .footer-480 ul,#footer .footer-480{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    #footer .footer-480 li{
+        font-size: x-small;
+    }
+
 }

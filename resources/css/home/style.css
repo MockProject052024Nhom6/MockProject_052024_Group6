@@ -11,7 +11,7 @@
     --color-shadow:rgba(75, 75, 75, 0.844);
     --font-size-big: 22px;
     --font-size-small: 14px;
-    --box-shadow-menu: 0px 0px 10px rgba(76, 76, 76, 0.745);
+    --box-shadow-menu: 0px 0px 5px rgba(76, 76, 76, 0.745);
     --box-text-shadow-light: 0px 0px 5px rgb(255, 255, 255);
 }
 
@@ -184,6 +184,10 @@ section{
     background-color: var(--color-button);
 }
 
+#footer li:hover{
+    text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.699);
+}
+
 #footer .custom-footer-top{
     padding-bottom: 30px;
 }
@@ -226,4 +230,8 @@ section{
     display: flex;
     justify-content: left;
     align-items: center;
+}
+
+#footer .footer-480{
+    display: none;
 }
