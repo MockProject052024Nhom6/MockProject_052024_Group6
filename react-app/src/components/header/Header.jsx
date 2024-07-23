@@ -1,16 +1,20 @@
 import './Header.css';
 import Logo from '../../assets/images/logo.png';
+
 import 'boxicons/css/boxicons.min.css';
+import { useState } from 'react';
 
 const Header = () => {
+    const [navVisible, setNavVisible] = useState(false);
+    const [partnerListVisible, setPartnerListVisible] = useState(false);
     return (
         <div id='header' className=''>
             <div className="partner">
                 <div className='header-partner'>
                     <p className='partner-name'>Liquidity Services Brands</p>
-                    <div className='rs-show nav-down'><i className='bx bxs-down-arrow'></i></div>
+                    <div className='rs-show nav-down'><i className='bx bxs-down-arrow' onClick={() => setPartnerListVisible(!partnerListVisible)}></i></div>
                 </div>
-                <div className="list-partner">
+                <div className={`list-partner ${partnerListVisible ? 'show' : ''}`}>
                     <ul>
                         <li>ALLSURPLUS</li>
                         <li>GovDeals</li>
@@ -21,7 +25,10 @@ const Header = () => {
                 </div>
             </div>
             <div className='nav'>
-                <div className='navbar'>
+                <div className={`navbar ${navVisible ? 'show' : ''}`}>
+                    <div className='rs-show close-btn' onClick={() => setNavVisible(false)}>
+                        <i className='bx bx-x'></i>
+                    </div>
                     <ul>
                         <li>About Us</li>
                         <li>Buy</li>
@@ -41,7 +48,7 @@ const Header = () => {
             <div className='search-area'>
                 <div className='rs-nav'>
                     <div className='rs-show nav-left icon'>
-                        <i className='bx bx-menu-alt-left' ></i>
+                        <i className='bx bx-menu-alt-left' onClick={() => setNavVisible(!navVisible)}></i>
                     </div>
                     <img src={Logo} alt='Logo' />
                     <div className='rs-show icon btn-cart'>

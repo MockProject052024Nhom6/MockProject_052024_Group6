@@ -10,9 +10,9 @@ const Footer = () => {
     return (
         <div id='Footer' className='footer'>
             <div className='footer-content'>
-                <div className='content-left'>
-                    <div className='content-up'>
-                        <div className='left'>
+                <div className='left content-support'>
+                    <div className='up '>
+                        <div className='left about'>
                             <p>Get to Know Us</p>
                             <ul>
                                 <li>
@@ -32,7 +32,7 @@ const Footer = () => {
                                 </li>
                             </ul>
                         </div>
-                        <div className='right'>
+                        <div className='right support-sell'>
                             <p>Sell With Us</p>
                             <ul>
                                 <li>
@@ -44,8 +44,8 @@ const Footer = () => {
                             </ul>
                         </div>
                     </div>
-                    <div className='content-down'>
-                        <div className='left'>
+                    <div className='down'>
+                        <div className='left support-buy'>
                             <p>Buy From Us</p>
                             <ul>
                                 <li>
@@ -59,7 +59,7 @@ const Footer = () => {
                                 </li>
                             </ul>
                         </div>
-                        <div className='right'>
+                        <div className='right support-help'>
                             <p>Need Hepl?</p>
                             <ul>
                                 <li>
@@ -78,55 +78,55 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
-                <div className='content-right'>
-                    <div className='content-up'>
+                <div className='right partners'>
+                    <div className='up'>
                         <p>Liquidity Services Brands</p>
-                        <div className='list-logo'>
-                            <div className='logo-item'>
+                        <div className='list-partner'>
+                            <div className='partner-item'>
                                 <div className='left'>
-                                    <img src={AllsurplusLogo} alt='Surplus Aggregator Logo'/>
+                                    <img src={AllsurplusLogo} alt='Surplus Aggregator Logo' />
                                     <span>Surplus Aggregator</span>
                                 </div>
                                 <div className='right'>
-                                    <img src={LiquidationLogo} alt='Retail Surplus'/>
+                                    <img src={LiquidationLogo} alt='Retail Surplus' />
                                     <span>Retail Surplus</span>
                                 </div>
                             </div>
-                            <div className='logo-item'>
+                            <div className='partner-item'>
                                 <div className='left'>
-                                    <img src={Bid4assetsLogo} alt='Property Surplus'/>
+                                    <img src={Bid4assetsLogo} alt='Property Surplus' />
                                     <span>Property Surplus</span>
                                 </div>
                                 <div className='right'>
-                                    <img src={MachinioLogo} alt=''/>
+                                    <img src={MachinioLogo} alt='' />
                                     <span>Machinery Surplus</span>
                                 </div>
                             </div>
-                            <div className='logo-item'>
+                            <div className='partner-item'>
                                 <div className='left'>
-                                    <img src={GovdealsLogo} alt='Government Surplus'/>
+                                    <img src={GovdealsLogo} alt='Government Surplus' />
                                     <span>Government Surplus</span>
                                 </div>
                                 <div className='right'>
-                                    <img src={SecondipityLogo} alt='Consumer Surplus'/>
+                                    <img src={SecondipityLogo} alt='Consumer Surplus' />
                                     <span>Consumer Surplus</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className='content-down'>
+                    <div className='down'>
                         <div className='content-media'>
-                            <div className='left'>
+                            <div className='left subscribe'>
                                 <p>Subscribe</p>
                                 <span>Manage Preferences</span>
                             </div>
-                            <div className='right'>
+                            <div className='right media'>
                                 <p>Follow Us</p>
                                 <ul>
-                                    <li><i class='bx bxl-facebook'></i></li>
-                                    <li><i class='bx bxl-linkedin' ></i></li>
-                                    <li><i class='bx bxl-twitter' ></i></li>
-                                    <li><i class='bx bxl-youtube' ></i></li>
+                                    <li className='facebook'><i className='bx bxl-facebook'></i></li>
+                                    <li className='linkedin'><i className='bx bxl-linkedin' ></i></li>
+                                    <li className='twitter'><i className='bx bxl-twitter' ></i></li>
+                                    <li className='youtube'><i className='bx bxl-youtube' ></i></li>
                                 </ul>
                             </div>
                         </div>
@@ -137,24 +137,22 @@ const Footer = () => {
                 <div className='copyright-content'>
                     &copy; 7/2024 MockProject, Inc. All rights reserved.
                 </div>
-                <div className='footer-nav'>
-                    <div>
-                        <ul>
-                            <li>
-                                Site Map
-                            </li>
-                            <li>
-                                Privacy Policy
-                            </li>
-                            <li>
-                                User Agreement
-                            </li>
-                            <li>
-                                Manage Cookies
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
+                <div className='footer-more-info'>
+                    <ul>
+                        <li>
+                            Site Map
+                        </li>
+                        <li>
+                            Privacy Policy
+                        </li>
+                        <li>
+                            User Agreement
+                        </li>
+                        <li>
+                            Manage Cookies
+                        </li>
+                    </ul>
+                    <div className='change-language'>
                         Language
                     </div>
                 </div>

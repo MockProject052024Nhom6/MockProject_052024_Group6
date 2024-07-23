@@ -1,0 +1,199 @@
+#asset {
+    display: flex;
+    font-size: 13px;
+}
+
+#asset ul {
+    list-style: none;
+}
+
+#asset .navbar.left {
+    border-right: 1px solid #d3d3d3;
+    width: 13.67%;
+}
+
+#asset .navbar.left ul li {
+    padding: 0.25rem 1.5rem 0.5rem 1.25rem;
+    margin-left: -2.5rem;
+}
+
+#asset .navbar.right {
+    width: 86.33%;
+}
+
+#asset .navbar.right ul {
+    display: flex;
+    margin-left: -1.5rem;
+    font-size: 0.75rem;
+}
+
+#asset .navbar.right ul li {
+    padding: 0 0.5rem;
+    border-right: 1px solid #000000;
+    text-decoration: underline;
+    color: blue;
+}
+
+#asset .navbar.right ul li:last-child {
+    border-right: none;
+}
+
+/* CSS left content of form */
+
+#asset .asset-info {
+    text-align: center;
+}
+
+#asset .asset-info h2 {
+    font-weight: 400;
+}
+
+#asset .asset-form .form-content {
+    display: flex;
+}
+
+#asset .form-info.right,
+#asset .form-info.left {
+    width: 50%;
+}
+
+#asset .form-info.left .form-group {
+    display: flex;
+    padding: 1rem 1.5rem;
+}
+
+#asset .form-info.left textarea {
+    height: 50px;
+}
+
+#asset .form-info.left label {
+    text-align: left;
+    width: 35%;
+}
+
+#asset .form-info.left .form-control {
+    width: 45%;
+    margin-left: 3rem;
+}
+
+#asset .form-info.left .product-value {
+    display: flex;
+}
+
+#asset .form-info.left .product-value i {
+    margin-left: 0.5rem;
+    font-size: 1.25rem;
+    margin-top: -0.25rem;
+}
+
+#asset .form-info.left select {
+    width: 100%;
+    padding: 0.25rem;
+    margin-top: -0.25rem;
+}
+
+#asset .navbar.right ul li:hover,
+#asset .navbar.left ul li:hover {
+    cursor: pointer;
+    color: #200c91;
+}
+
+/* CSS right content of form */
+#asset .form-info.right {
+    text-align: left;
+    margin-left: 5.75rem;
+}
+
+#asset .form-info.right .images-videos {
+    height: 55%;
+    border: 1px solid #d3d3d3;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#asset .form-info.right .images-videos i {
+    font-size: 2rem;
+    margin-top: 15%;
+    margin-bottom: 1rem;
+}
+
+#asset .form-info.right .form-group label,
+#asset .form-info.right .images-videos label {
+    margin-bottom: 1rem;
+}
+
+#asset .form-info.right .form-group label {
+    margin-left: 1rem;
+}
+
+#asset .form-info.right .form-group .check-requesst {
+    margin-top: 1.5rem;
+}
+
+#asset form .note {
+    text-align: left;
+    font-weight: bold;
+    margin: 1rem 0 1rem 1.5rem;
+    font-size: 0.75rem;
+}
+
+#asset form .btn-save {
+    background-color: rgb(21, 228, 21);
+    padding: 0.25rem 1rem;
+    border: 1px solid #d3d3d3;
+    margin-bottom: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #asset {
+        flex-direction: column;
+    }
+
+    #asset .navbar.left {
+        border-right: none;
+        width: 100%;
+        border: 1px solid #d3d3d3;
+    }
+
+    #asset .asset-form .form-content {
+        flex-direction: column;
+    }
+
+    #asset .form-info.right,
+    #asset .form-info.left {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    #asset .form-info.left .form-group {
+        flex-direction: column;
+        margin-bottom: -1rem;
+    }
+
+    #asset .form-info.left .form-group .form-control {
+        width: 98%;
+        margin-left: 0;
+        margin-top: 0.5rem;
+    }
+
+    #asset .form-info.left .product-value {
+        width: 100%;
+    }
+
+    #asset .form-info.right {
+        margin-left: 1.5rem;
+    }
+
+    #asset .form-info.right .images-videos {
+        padding: 1rem 0;
+        width: 85.5%;
+    }
+
+    #asset .form-info.right .images-videos i {
+        margin-top: 0;
+    }
+}
