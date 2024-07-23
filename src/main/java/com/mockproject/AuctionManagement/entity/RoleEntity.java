@@ -1,5 +1,6 @@
 package com.mockproject.AuctionManagement.entity;
 
+import com.mockproject.AuctionManagement.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,14 +19,14 @@ import java.util.Set;
 
 public class RoleEntity extends AbstractEntity{
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_role")
     private Integer idRole;
 
     @Column(name = "role_name")
-    private String roleName;
+    @Enumerated(EnumType.STRING)
+    private UserRole roleName;
 
     @Column(name = "description")
     private String description;

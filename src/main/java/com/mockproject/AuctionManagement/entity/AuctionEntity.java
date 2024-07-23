@@ -65,4 +65,8 @@ public class AuctionEntity extends AbstractEntity {
     @OneToMany(mappedBy = "auctionEntity", fetch = FetchType.EAGER)
     private Set<AuctionHasAssetEntity> auctionHasAssetEntities = new HashSet<>();
 
+    @ManyToOne()
+    @JoinColumn(name = "id_holiday")
+    private HolidayEntity holidayEntity;
+
 }

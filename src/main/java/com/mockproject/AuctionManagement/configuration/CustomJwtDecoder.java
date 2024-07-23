@@ -1,8 +1,10 @@
 package com.mockproject.AuctionManagement.configuration;
 
 import com.mockproject.AuctionManagement.dto.request.IntrospectRequest;
+import com.mockproject.AuctionManagement.repository.UserRepository;
 import com.mockproject.AuctionManagement.service.AuthenticationService;
 import com.nimbusds.jose.JOSEException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
@@ -17,6 +19,7 @@ import java.text.ParseException;
 import java.util.Objects;
 
 @Component
+@Slf4j
 public class CustomJwtDecoder implements JwtDecoder {
     @Value("${jwt.signerKey}")
     private String signerKey;
@@ -26,6 +29,9 @@ public class CustomJwtDecoder implements JwtDecoder {
 
     private NimbusJwtDecoder nimbusJwtDecoder = null;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public Jwt decode(String token) throws JwtException {
 
@@ -34,6 +40,7 @@ public class CustomJwtDecoder implements JwtDecoder {
                     IntrospectRequest.builder().token(token).build());
 
             if (!response.isValid()) throw new JwtException("Token invalid");
+
         } catch (JOSEException | ParseException e) {
             throw new JwtException(e.getMessage());
         }

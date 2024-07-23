@@ -1,6 +1,5 @@
 package com.mockproject.AuctionManagement.controller;
 
-import com.mockproject.AuctionManagement.configuration.CustomJwtDecoder;
 import com.mockproject.AuctionManagement.dto.request.AuctionRegisterRequest;
 import com.mockproject.AuctionManagement.dto.request.AuctionRequestCreate;
 import com.mockproject.AuctionManagement.dto.request.AuctionRequestUpdate;
@@ -9,7 +8,6 @@ import com.mockproject.AuctionManagement.dto.response.ApiResponse;
 import com.mockproject.AuctionManagement.dto.response.AuctionDeleteResponse;
 import com.mockproject.AuctionManagement.dto.response.AuctionRegisterResponse;
 import com.mockproject.AuctionManagement.dto.response.AuctionResponse;
-import com.mockproject.AuctionManagement.entity.AuctionEntity;
 import com.mockproject.AuctionManagement.service.AuctionService;
 import com.nimbusds.jose.JOSEException;
 import lombok.AccessLevel;
@@ -17,11 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
