@@ -20,13 +20,12 @@ services:
       /opt/mssql/bin/sqlservr &
       sleep 15;
       echo 'Waiting for SQL Server to be ready...';
-      until /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 12345678Aa! -Q 'SELECT 1'; do
+      until /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SQLSERVER_SA_PASSWORD} -Q 'SELECT 1'; do
         >&2 echo 'SQL Server is starting up';
         sleep 1;
       done;
       echo 'SQL Server is up - executing init script';
-      /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 12345678Aa! -Q 'IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = \"auction_management\") CREATE DATABASE auction_management;';
-      /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 12345678Aa! -d auction_management -i /init-db.sql;
+      /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SQLSERVER_SA_PASSWORD} -Q 'IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = \"${SQLSERVER_DATABASE}\") CREATE DATABASE ${SQLSERVER_DATABASE};';
       wait
       "
 
@@ -34,7 +33,7 @@ services:
     container_name: api-service-spring
     env_file: .env
     restart: always
-    image: phhtruc/auctionmanagement-api-service:latest
+    image: phhtruc/auctionmanagement-api-service-1.1:1.1
     ports:
       - "${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}"
     environment:
