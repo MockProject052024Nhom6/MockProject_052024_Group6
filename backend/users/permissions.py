@@ -1,8 +1,6 @@
 from rest_framework import permissions
-from django.contrib.auth import get_user_model
 from .enums import UserRole
-
-User = get_user_model()
+from .models import User
 
 class IsAdminUser(permissions.BasePermission):
     def has_permission(self, request, view):
