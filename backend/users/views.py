@@ -53,13 +53,17 @@ def login(request):
     """Authenticate a user and return tokens."""
     email = request.data.get('email')
     password = request.data.get('password')
-    user = authenticate(request, email=email, password=password)
-
+    
+    user = User.objects.filter(email=email).first()
+    
     if user is None:
         return Response({'message': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-
+    
     if not user.is_active:
         return Response({"message": "This account is not active"}, status=status.HTTP_403_FORBIDDEN)
+    
+    if not user.check_password(password):
+        return Response({'message': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
     user.last_login = timezone.now()
     user.save(update_fields=['last_login'])
