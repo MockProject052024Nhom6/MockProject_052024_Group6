@@ -41,7 +41,7 @@ class Asset(models.Model):
 
 class AssetMedia(models.Model):
     id_asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
-    media_file = models.FileField()
+    media_file = models.FileField(upload_to="media/", blank=True, null=True)
     status = models.BooleanField(default=True)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
