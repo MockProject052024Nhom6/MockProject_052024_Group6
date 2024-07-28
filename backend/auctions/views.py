@@ -40,7 +40,7 @@ class AuctionViewSet(viewsets.ModelViewSet):
         except Asset.DoesNotExist:
             return Response({"error": "Asset not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        if asset.status_asset != AssetStatus.ACTIVE or asset.property_status != PropertyStatus.AVAILABLE:
+        if asset.asset_status != AssetStatus.ACTIVE or asset.property_status != PropertyStatus.AVAILABLE:
             return Response({"error": "Asset must be active and available"}, status=status.HTTP_400_BAD_REQUEST)
 
         auction_has_asset = AuctionHasAsset.objects.create(

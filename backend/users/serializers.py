@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from .models import User, Notification, UserNotification, InformationAccount, TransactionHistory
+from .models import User, Notification, UserNotification, TransactionHistory
 
 
 class AdminUserSerializer(serializers.ModelSerializer):
@@ -113,15 +113,6 @@ class UserNotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserNotification
         fields = ['id', 'notification', 'is_read', 'read_date']
-
-
-class InformationAccountSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = InformationAccount
-        fields = ['id', 'id_user', 'card_number', 'expiration', 'cvv', 'billing_address',
-                  'postal_code', 'state', 'first_name', 'last_name', 'city_account',
-                  'created_date', 'modified_date']
-        read_only_fields = ['id', 'created_date', 'modified_date']
 
 
 class TransactionHistorySerializer(serializers.ModelSerializer):

@@ -13,7 +13,6 @@ class Auction(models.Model):
     number_of_participants = models.PositiveIntegerField(default=0)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    type_auction = models.CharField(max_length=10, choices=TypeAuction.choices)
     status = models.BooleanField(default=True)
     id_auctioneer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='auctions')
     status_auction = models.CharField(max_length=20, choices=AuctionStatus.choices, default=AuctionStatus.PENDING)

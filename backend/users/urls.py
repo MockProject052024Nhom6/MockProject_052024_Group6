@@ -11,7 +11,6 @@ router = DefaultRouter()
 router.register('users', UserViewSet, basename='user')
 router.register('notifications', NotificationViewSet, basename='notification')
 router.register('user-notifications', UserNotificationViewSet, basename='user-notification')
-router.register('information-accounts', InformationAccountViewSet, basename='information-account')
 router.register('transaction-history', TransactionHistoryViewSet, basename='transaction-history')
 
 urlpatterns = [
