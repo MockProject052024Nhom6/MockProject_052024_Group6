@@ -1,9 +1,5 @@
 from django.db import models
 
-class TypeAuction(models.TextChoices):
-    LIVE = 'live', 'Live'
-    ONLINE = 'online', 'Online'
-
 class AuctionStatus(models.TextChoices):
     PENDING = 'pending', 'Pending'
     ACTIVE = 'active', 'Active'

@@ -10,12 +10,12 @@ from .views import (
 )
 
 router = DefaultRouter()
-router.register(r"category-assets", CategoryAssetViewSet)
-router.register(r"warehouses", WareHouseViewSet)
-router.register(r"appraisers", AppraiserViewSet)
-router.register(r"assets", AssetViewSet)
-router.register(r"asset-media", AssetMediaViewSet)
-router.register(r"inventory-transactions", InventoryTransactionViewSet)
+router.register("category-assets", CategoryAssetViewSet)
+router.register("warehouses", WareHouseViewSet)
+router.register("appraisers", AppraiserViewSet)
+router.register("assets", AssetViewSet)
+router.register("asset-media", AssetMediaViewSet)
+router.register("inventory-transactions", InventoryTransactionViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),

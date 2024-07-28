@@ -2,10 +2,6 @@ from rest_framework import serializers
 from .models import CategoryAsset, WareHouse, Appraiser, Asset, AssetMedia, InventoryTransaction
 from users.serializers import UserSerializer
 
-class CategoryAssetSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CategoryAsset
-        fields = '__all__'
 
 class WareHouseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,7 +20,6 @@ class AssetSerializer(serializers.ModelSerializer):
     id_seller = UserSerializer(read_only=True)
     id_warehouse = WareHouseSerializer(read_only=True)
     id_appraiser = AppraiserSerializer(read_only=True)
-    id_category = CategoryAssetSerializer(read_only=True)
 
     class Meta:
         model = Asset
@@ -35,11 +30,4 @@ class AssetMediaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AssetMedia
-        fields = '__all__'
-
-class InventoryTransactionSerializer(serializers.ModelSerializer):
-    id_warehouse = WareHouseSerializer(read_only=True)
-
-    class Meta:
-        model = InventoryTransaction
         fields = '__all__'

@@ -3,20 +3,16 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Count
 from .models import (
-    CategoryAsset,
     WareHouse,
     Appraiser,
     Asset,
     AssetMedia,
-    InventoryTransaction,
 )
 from .serializers import (
-    CategoryAssetSerializer,
     WareHouseSerializer,
     AppraiserSerializer,
     AssetSerializer,
     AssetMediaSerializer,
-    InventoryTransactionSerializer,
 )
 from users.permissions import IsAdminUser, IsStaffUser
 from users.enums import UserRole

@@ -185,24 +185,6 @@ class UserNotificationViewSet(viewsets.ReadOnlyModelViewSet):
         return Response({"message": "All notifications marked as read"}, status=status.HTTP_200_OK)
 
 
-class InformationAccountViewSet(viewsets.ModelViewSet):
-    serializer_class = InformationAccountSerializer
-
-    def get_permissions(self):
-        if self.action in ['list', 'retrieve']:
-            permission_classes = [IsAuthenticated]
-        else:
-            permission_classes = [IsAdminUser]
-        return [permission() for permission in permission_classes]
-
-    def get_queryset(self):
-        if self.request.user.is_authenticated:
-            if self.request.user.is_staff:
-                return InformationAccount.objects.all()
-            return InformationAccount.objects.filter(id_user=self.request.user)
-        return InformationAccount.objects.none()
-
-
 class TransactionHistoryViewSet(viewsets.ModelViewSet):
     serializer_class = TransactionHistorySerializer
 

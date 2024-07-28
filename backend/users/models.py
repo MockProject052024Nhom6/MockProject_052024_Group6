@@ -104,24 +104,6 @@ class UserNotification(models.Model):
         return f"{self.user.email} - {self.notification.title}"
 
 
-class InformationAccount(models.Model):
-    id_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='information_accounts')
-    card_number = models.CharField(max_length=16)
-    expiration = models.DateField()
-    cvv = models.CharField(max_length=4)
-    billing_address = models.TextField()
-    postal_code = models.CharField(max_length=10)
-    state = models.CharField(max_length=50)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    city_account = models.CharField(max_length=100)
-    created_date = models.DateTimeField(auto_now_add=True)
-    modified_date = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"Account Info for {self.first_name} {self.last_name}"
-
-
 class TransactionHistory(models.Model):
     id_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transactions')
     transaction_amount = models.DecimalField(max_digits=10, decimal_places=2)
