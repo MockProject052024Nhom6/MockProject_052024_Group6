@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core.validators import MinValueValidator, MaxValueValidator
 from .enums import Gender, UserRole
 
-
 class CustomUserManager(BaseUserManager):
     """Custom user manager."""
 
@@ -102,22 +101,3 @@ class UserNotification(models.Model):
 
     def __str__(self):
         return f"{self.user.email} - {self.notification.title}"
-
-
-class TransactionHistory(models.Model):
-    id_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transactions')
-    transaction_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    content = models.TextField()
-    sender_account_number = models.CharField(max_length=50)
-    bank = models.CharField(max_length=100)
-    account_owner_name = models.CharField(max_length=100)
-    receiver_name = models.CharField(max_length=100)
-    recipient_account_number = models.CharField(max_length=50)
-    status_transaction = models.CharField(max_length=50)
-    note = models.TextField(blank=True)
-    day_trading = models.DateField()
-    created_date = models.DateTimeField(auto_now_add=True)
-    modified_date = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"Transaction {self.id} for User {self.id_user_id}"
