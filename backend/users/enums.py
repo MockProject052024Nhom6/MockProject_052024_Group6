@@ -5,7 +5,6 @@ class Gender(models.TextChoices):
     FEMALE = 'F', 'Female'
     OTHER = 'O', 'Other'
 
-
 class UserRole(models.TextChoices):
     USER = 'user', 'User'
     ADMIN = 'admin', 'Admin'

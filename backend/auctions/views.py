@@ -132,3 +132,20 @@ class TaxHasContractViewSet(viewsets.ModelViewSet):
     queryset = TaxHasContract.objects.all()
     serializer_class = TaxHasContractSerializer
     permission_classes = [IsAdminUser | IsStaffUser]
+    
+# class TransactionHistoryViewSet(viewsets.ModelViewSet):
+#     serializer_class = TransactionHistorySerializer
+
+#     def get_permissions(self):
+#         if self.action in ['list', 'retrieve']:
+#             permission_classes = [IsAuthenticated]
+#         else:
+#             permission_classes = [IsAdminUser]
+#         return [permission() for permission in permission_classes]
+
+#     def get_queryset(self):
+#         if self.request.user.is_authenticated:
+#             if self.request.user.is_staff:
+#                 return TransactionHistory.objects.all()
+#             return TransactionHistory.objects.filter(id_user=self.request.user)
+#         return TransactionHistory.objects.none()

@@ -6,6 +6,7 @@ class AssetAppraiseStatus(models.TextChoices):
 
 class AssetStatus(models.TextChoices):
     PENDING = 'pending', 'Pending'
+    IN_AUCTION = 'in_auction', 'In Auction'
     SOLD = 'sold', 'Sold'
 
 class AppraiserStatus(models.TextChoices):

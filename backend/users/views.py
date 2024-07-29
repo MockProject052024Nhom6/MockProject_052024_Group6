@@ -6,11 +6,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 from django.contrib.auth import authenticate, get_user_model
 from django.utils import timezone
-from .serializers import (UserSerializer, SignUpSerializer, ChangePasswordSerializer, NotificationSerializer, UserNotificationSerializer,
-                          InformationAccountSerializer, TransactionHistorySerializer, AdminUserSerializer, StaffUserSerializer)
+from .serializers import (UserSerializer, SignUpSerializer, ChangePasswordSerializer,
+                          NotificationSerializer, UserNotificationSerializer, AdminUserSerializer,StaffUserSerializer)
 from .permissions import IsAdminUser, IsStaffUser
-
-from .models import Notification, UserNotification, InformationAccount, TransactionHistory
+from .models import Notification, UserNotification
 
 User = get_user_model()
 
@@ -53,15 +52,15 @@ def login(request):
     """Authenticate a user and return tokens."""
     email = request.data.get('email')
     password = request.data.get('password')
-    
+
     user = User.objects.filter(email=email).first()
-    
+
     if user is None:
         return Response({'message': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-    
+
     if not user.is_active:
         return Response({"message": "This account is not active"}, status=status.HTTP_403_FORBIDDEN)
-    
+
     if not user.check_password(password):
         return Response({'message': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -181,23 +180,6 @@ class UserNotificationViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=['post'])
     def mark_all_as_read(self, request):
-        UserNotification.objects.filter(user=request.user, is_read=False).update(is_read=True, read_date=timezone.now())
+        UserNotification.objects.filter(user=request.user, is_read=False).update(
+            is_read=True, read_date=timezone.now())
         return Response({"message": "All notifications marked as read"}, status=status.HTTP_200_OK)
-
-
-class TransactionHistoryViewSet(viewsets.ModelViewSet):
-    serializer_class = TransactionHistorySerializer
-
-    def get_permissions(self):
-        if self.action in ['list', 'retrieve']:
-            permission_classes = [IsAuthenticated]
-        else:
-            permission_classes = [IsAdminUser]
-        return [permission() for permission in permission_classes]
-
-    def get_queryset(self):
-        if self.request.user.is_authenticated:
-            if self.request.user.is_staff:
-                return TransactionHistory.objects.all()
-            return TransactionHistory.objects.filter(id_user=self.request.user)
-        return TransactionHistory.objects.none()
